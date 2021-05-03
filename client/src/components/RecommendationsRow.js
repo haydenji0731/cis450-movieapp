@@ -59,7 +59,7 @@ export default class RecommendationsRow extends React.Component {
 	showGenres() {
 		const genresDisplayArr = [];
 		for (var i = 0; i < this.state.genres.length; i++) {
-			if (i == this.state.genres.length - 1) {
+			if (i == (this.state.genres.length - 1)) {
 				genresDisplayArr.push(this.state.genres[i])
 			}
 			else {
