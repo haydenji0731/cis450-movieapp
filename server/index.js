@@ -28,7 +28,6 @@ app.get('/keywordsDropdown', routes.getKeywords);
 
 //get movie recommendations based on keyword search
 app.get('/recs/:keyword', routes.getRecs);
-app.get('/overviews/:movie_id', routes.getOverviews);
 
 /* ---- (Best Movies) ---- */
 app.get('/decades', routes.getDecades);
@@ -38,6 +37,9 @@ app.get('/genres/:movie_id', routes.getGenres);
 /* ---- Q3b (Best Movies) ---- */
 
 app.get('/bestMovies/:decade/:genre', routes.bestMoviesPerDecadeGenre);
+
+/* -- Actors -- */
+app.get('/actors/:actor', routes.getTopFives);
 
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);
