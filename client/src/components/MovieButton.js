@@ -85,9 +85,17 @@ export default class KeywordButton extends React.Component {
 
 	render() {
 		return (
-			<div className="keyword" id={this.props.id} onClick={this.props.onClick}>
+			// <div className="keyword" id={this.props.id} onClick={this.props.onClick}>
+			<div className="movie">
 				{/* {this.props.title} */}
-                <div class='moviebutton-container'>
+				<img src={"https://m.media-amazon.com/images/M"+this.props.path} 
+				alt = {this.props.title} width="160" height="230" />
+				<div className="movie__data">
+					<div className="movie__title">{this.props.title}</div>
+					<div className="movie__genres">{this.state.genresDisplay}</div>
+					<div className="movie__summary">{this.props.overview}</div>
+				</div>
+                {/* <div class='moviebutton-container'>
 					<div class='flex-child-left'>
                       	<img src={"https://m.media-amazon.com/images/M"+this.props.path} 
 						//   onError={imgError(this)}
@@ -107,7 +115,7 @@ export default class KeywordButton extends React.Component {
                         	{this.props.overview}
                     	</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 		);
 	};

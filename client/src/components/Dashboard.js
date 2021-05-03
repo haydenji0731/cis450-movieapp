@@ -99,15 +99,17 @@ export default class Dashboard extends React.Component {
       <div className="Dashboard">
 
         <PageNavbar active="dashboard" />
-
+        <div className="movies">
+              {this.state.keywords}
+        </div>
         <br />
         <div className="container movies-container">
-          <div className="jumbotron">
+          {/* <div className="jumbotron">
             <div className="h5">Top Movies</div>
-            <div className="keywords-container">
+            {/* <div className="movies">
               {this.state.keywords}
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
           <br />
           <div className="jumbotron">
             <div className="movies-container">
