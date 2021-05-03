@@ -1,14 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style/Recommendations.css';
 
 export default class KeywordButton extends React.Component {
-	/* props looks like:
-		{
-			id
-			onClick
-			keyword
-		}
-	*/
 	constructor(props) {
 		super(props);
 		this.state = {

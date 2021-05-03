@@ -50,7 +50,7 @@ var query = `WITH highest_ranked AS (SELECT movie_id, movie_title, vote_average 
              movie_keywords AS (SELECT m.movie_id, k.keyword, m.vote_average FROM movies m
              JOIN about a ON m.movie_id = a.movie_id
              JOIN keyword k ON k.keyword_id = a.keyword_id) SELECT keyword FROM movie_keywords
-             WHERE movie_id IN (SELECT movie_id FROM highest_ranked) ORDER BY vote_average DESC, keyword LIMIT 30;`;
+             WHERE movie_id IN (SELECT movie_id FROM highest_ranked) ORDER BY vote_average DESC, keyword LIMIT 15;`;
 
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
@@ -73,7 +73,7 @@ const getRecs = (req, res) => {
                  WHERE m.vote_average <= 10
                  GROUP BY m.movie_title
                  ORDER BY m.vote_average DESC, m.movie_title
-                 LIMIT 10;`;
+                 LIMIT 9;`;
   connection.query(query, function(err, rows, field) {
     if (err) console.log(err);
     else {
@@ -116,6 +116,18 @@ const getGenres = (req, res) => {
   });
 };
 
+const getOverviews = (req, res) => {
+  var movie_id = req.params.movie_id;
+  var query = `SELECT overview FROM movies WHERE movie_id = ${movie_id};`;
+  connection.query(query, function(err, rows, field) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+};
+
 /* ---- Q3b (Best Movies) ---- */
 const bestMoviesPerDecadeGenre = (req, res) => {
   var decade = req.params.decade;
@@ -143,6 +155,7 @@ module.exports = {
 	getTopMovies: getTopMovies,
 	getKeywords: getKeywords,
   getRecs: getRecs,
+  getOverviews: getOverviews,
   getDecades: getDecades,
   getGenres: getGenres,
   bestMoviesPerDecadeGenre: bestMoviesPerDecadeGenre
