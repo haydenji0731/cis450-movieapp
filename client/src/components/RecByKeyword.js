@@ -5,9 +5,8 @@ import ImageGalleryRow from './ImageGalleryRow';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import KeywordButton from './KeywordRecPageButton';
-import BG1 from './bg1.jpg';
 
-export default class Recommendations extends React.Component {
+export default class RecByKeyword extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -21,7 +20,6 @@ export default class Recommendations extends React.Component {
 			originalDisplay: [],
 			imageGallery: [],
 			recMoviesIds: [],
-			recMoviesOverviews: [],
 		};
 
 		this.handleKeywordChange = this.handleKeywordChange.bind(this);
@@ -41,11 +39,11 @@ export default class Recommendations extends React.Component {
 		}).then(keywordsList => {
 			if (!keywordsList) return;
 			const keywordsDivs = keywordsList.map((keywordObj, i) =>
-			  <div class='paddedColumn'>
-				<div><button id="button-" class="pushable" onClick={() => this.submitKeyword(keywordObj.keyword)}>
-					<span class="front">{keywordObj.keyword}</span>
-				</button> <br></br> <br></br> </div>
-				</div>
+				<KeywordButton
+				id={"button-" + keywordObj.keyword}
+				onClick={() => this.submitKeyword(keywordObj.keyword)}
+				keyword={keywordObj.keyword}
+				/>
 			);
 			this.setState({
 				keywords: keywordsDivs
@@ -65,10 +63,8 @@ export default class Recommendations extends React.Component {
 		}).then(recsList => {
 			if (recsList.ok) return;
 				const recMoviesIdsIntermediate = [];
-				const recMoviesOverviewsIntermediate = [];
 				for (var i = 0; i < recsList.length; i++) {
 					recMoviesIdsIntermediate.push(recsList[i].id);
-					recMoviesOverviewsIntermediate.push(recsList[i].overview);
 				}
 				const recsDivs = recsList.map((movieObj, i) =>
 				< RecommendationsRow
@@ -84,8 +80,7 @@ export default class Recommendations extends React.Component {
 			);
 			this.setState({
 				recMovies: recsDivs,
-				recMoviesIds: recMoviesIdsIntermediate,
-				recMoviesOverviews: recMoviesOverviewsIntermediate
+				recMoviesIds: recMoviesIdsIntermediate
 			}
 		);
 		this.createImageGallery();
@@ -105,10 +100,6 @@ export default class Recommendations extends React.Component {
 				firstMovieId= {this.state.recMoviesIds[i]}
 				secondMovieId = {this.state.recMoviesIds[i + 1]}
 				thirdMovieId = {this.state.recMoviesIds[i + 2]}
-
-				firstMovieOverview= {this.state.recMoviesOverviews[i]}
-				secondMovieOverview = {this.state.recMoviesOverviews[i + 1]}
-				thirdMovieOverview = {this.state.recMoviesOverviews[i + 2]}
 			/>;
 			imageGalleryIntermediate.push(oneMovie);
 		}
@@ -158,11 +149,11 @@ export default class Recommendations extends React.Component {
 								</div>
 
 								<div class='middle-column'>
-									<button id="submitKeywordBtn" class="btn btn-4 btn-4a" onClick={() => this.submitKeyword(this.state.keyword)} >Submit</button>
+									<button id="submitKeywordBtn" className="submit-btn" onClick={() => this.submitKeyword(this.state.keyword)} >Submit</button>
 								</div>
 
 								<div class='right-column'>
-									<button id="showToWatchListBtn" className="btn btn-4 btn-4a" onClick={() => this.showToWatchList()} >View My To-Watch List</button>
+									<button id="showToWatchListBtn" className="submit-btn" onClick={() => this.showToWatchList()} >View My To-Watch List</button>
 								</div>
 							</div>
 

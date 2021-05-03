@@ -28,6 +28,7 @@ app.get('/keywordsDropdown', routes.getKeywords);
 
 //get movie recommendations based on keyword search
 app.get('/recs/:keyword', routes.getRecs);
+app.get('/overviews/:movie_id', routes.getOverviews);
 
 /* ---- (Best Movies) ---- */
 app.get('/decades', routes.getDecades);

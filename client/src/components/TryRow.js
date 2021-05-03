@@ -1,11 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from './logo.png';
-import '../style/Recommendations.css';
+import '../style/Try.css';
+import { Link } from 'react-router-dom';
 
 console.log(Logo);
 
-export default class RecommendationsRow extends React.Component {
+export default class TryRow extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -30,6 +31,7 @@ export default class RecommendationsRow extends React.Component {
 	    this.getGenres(this.props.id);
 	  }
 	}
+
 	callbackFunction(movie) {
 		this.props.parentCallback(movie);
 	};
@@ -78,21 +80,14 @@ export default class RecommendationsRow extends React.Component {
 						<div class="flip-display-front">
 							<img src={"https://m.media-amazon.com/images/M"+this.props.path} alt={this.props.title} width="240" height="345"/>
 						</div>
-
 						<div class="flip-display-back">
+  						<div class = "imgTrans"><img src={"https://m.media-amazon.com/images/M"+this.props.path} alt={this.props.title} width="240" height="345"/></div>
   						<div class="centered"><p><h5>{this.props.title}</h5></p>
   						<p>Genres: {this.state.genresDisplay}</p>
   						<row>Rating: {this.props.rating}</row></div>
-						</div>
+							</div>
 					</div>
 				</div>
 		);
 	};
 };
-
-// <div class="flip-display-back">
-//   <br></ br>
-// 	<row><h5>{this.props.title}</h5></row>
-// 	<p class='header-text'>Genres: {this.state.genresDisplay}</p>
-// 	<row>Rating: {this.props.rating}</row>
-// </div>

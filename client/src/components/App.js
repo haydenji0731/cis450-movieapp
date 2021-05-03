@@ -10,6 +10,7 @@ import BestMovies from './BestMovies';
 import Companies from './Companies';
 import Filter from './Filter';
 import Actors from './Actors';
+import Try from './Try';
 
 export default class App extends React.Component {
 
@@ -47,6 +48,10 @@ export default class App extends React.Component {
 						<Route
 							path="/actors"
 							render={() => <Actors />}
+						/>
+						<Route
+							path="/try"
+							render={() => <Try />}
 						/>
 					</Switch>
 				</Router>
