@@ -5,7 +5,7 @@ export default class ActorsRow extends React.Component {
 	/* actors row */
 	render() {
 		return (
-			<tr className="topFives">
+			<tr className="topFives" style={{textAlign: 'center', height: 40}}>
 				<td colspan="2" className="topCostars">{this.props.topFives.top_costars}</td>
 				<td colspan="2" className="topProfit">{this.props.topFives.most_profitable_movies}</td>
 				<td colspan="2" className="topGenre">{this.props.topFives.top_genres}</td>
