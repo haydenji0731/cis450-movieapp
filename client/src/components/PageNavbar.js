@@ -1,8 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from './logo.png';
-import '../style/Recommendations.css';
-import '../style/NavBar.css';
 
 console.log(Logo);
 
@@ -17,7 +15,7 @@ export default class PageNavbar extends React.Component {
 
 	// deleted best movies tab --> artificat of hw2 template file
 	componentDidMount() {
-		const pageList = ['dashboard', 'recommendations', 'filter', 'companies', 'actors'];
+		const pageList = ['dashboard', 'recommendations', 'filter', 'companies', 'Actor Top Fives'];
 
 		let navbarDivs = pageList.map((page, i) => {
 			if (this.props.active === page) {
@@ -35,23 +33,15 @@ export default class PageNavbar extends React.Component {
 	render() {
 		return (
 			<div className="PageNavbar">
-			<nav className="navbar navbar-expand-sm navbar-custom">
-			<span className="navbar-brand center">PennFlix</span>
-			<div class="container-fluid">
-			  <nav class="navbar navbar-inverse">
-			    <div class="container-fluid">
-			      <ul class="nav navbar-nav">
-						  <button type="button" href="/dashboard" class="btn btn-primary">{this.state.navDivs[0]}</button>
-							<button type="button" href="/recommendations" class="btn btn-primary">{this.state.navDivs[1]}</button>
-							<button type="button" href="/filter" class="btn btn-primary">{this.state.navDivs[2]}</button>
-							<button type="button" href="/companies" class="btn btn-primary">{this.state.navDivs[3]}</button>
-							<button type="button" href="/actors" class="btn btn-primary">{this.state.navDivs[4]}</button>
-			      </ul>
-			    </div>
-			  </nav>
-			</div>
-			<img src={Logo} alt="website logo" width="160" height="130"/>
-			</nav>
+				<nav className="navbar navbar-expand-lg navbar-light bg-light">
+			      <span className="navbar-brand center">PennFlix</span>
+			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+			        <div className="navbar-nav">
+			        	{this.state.navDivs}
+			        </div>
+			      </div>
+					<img src={Logo} alt="website logo" width="160" height="130"/>
+			    </nav>
 			</div>
     );
 	};

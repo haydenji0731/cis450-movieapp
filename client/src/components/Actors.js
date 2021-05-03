@@ -3,6 +3,8 @@ import PageNavbar from './PageNavbar';
 import ActorsRow from './ActorsRow';
 import '../style/Actors.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Popcorn from './popcorn.png';
+import Trophy from './trophy.png';
 
 export default class Actors extends React.Component {
 	constructor(props) {
@@ -53,14 +55,24 @@ export default class Actors extends React.Component {
 
 				<div className="container recommendations-container">
 					<div className="jumbotron">
-						<div className="h5">Actors</div>
+						
+						<div className="popcorn" style={{textAlign: 'center'}}>
+							<img src = {Trophy} width="130" height="130"/> 
+							<img src = {Popcorn} width="120" height="130"/>
+							<img src = {Trophy} width="130" height="130"/>
+						</div>
 						<br></br>
-						<div className="input-container">
+						<div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Fives</div>
+						<br></br>
+						<div className="input-container" style={{textAlign: 'center'}}>
 							<input type='text' placeholder="Enter Actor Name" value={this.state.actor} onChange={this.handleActorChange} id="actor" className="actor-input"/>
 							<button id="submitActorBtn" className="submit-actor" onClick={this.submitActor}>Submit</button>
 						</div>
-                        <table>
-                            <thead className="actorsTable-header">
+						<br></br>
+						<div className="h5" style={{textAlign: 'center'}}>The top fives are...</div>
+						<br></br>
+						<table style={{textAlign: 'center', height: 80, width: 1080, justifyContent: 'center'}}>
+                            <thead className="actorsTable-header" style={{fontSize: 18}}>
                                 <tr>
                                     <th colspan="2">Top 5 Co-stars</th>
                                     <th colspan="2">Top 5 Most Profitable Movies</th>
@@ -69,7 +81,7 @@ export default class Actors extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                             {this.state.topFives}
+                            	{this.state.topFives}
                             </tbody>
                         </table>
 						{/* <div className="header-container">
