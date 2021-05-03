@@ -38,6 +38,14 @@ app.get('/genres', routes.getGenres);
 
 app.get('/bestMovies/:decade/:genre', routes.bestMoviesPerDecadeGenre);
 
+/* ---- Q3b (Companies) ---- */
+app.get('/pCompany/:pCompName', routes.getPCompany);
+app.get('/pCompanyList', routes.getTopPCompanies);
+app.get('/matchingPCompany/:input_pCompName', routes.getTopMatchingPCompanies);
+
+
+
+
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);
 });

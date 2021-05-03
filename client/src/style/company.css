@@ -1,0 +1,99 @@
+.header-container, .results-container {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.header-container .headers, .results-container .movieResults {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+}
+
+.movieResults .title, .movieResults .id, .movieResults .rating, .movieResults .votes, .headers .header {
+  flex: 1 0 25%;
+}
+
+.movies-container .movies-header, .results-container .movie {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+}
+
+.paddedRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 150px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-basis: 100%;
+  flex: 0 23%;
+  width: 120px;
+  height: 100px;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-basis: 100%;
+  flex: 1;
+  width: 450px;
+  height: 100px;
+}
+
+
+.rightJustifiedrow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.keywords-container {
+  /* margin: 10px 0; */
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  /* border-bottom: 1px solid #ddd; */
+}
+
+.keywords-container .pCompany {
+  /* flex: 1 0 20%; */
+  margin: 5px 0;
+  padding: 10px;
+  cursor: pointer;
+  align-items: center;
+  box-sizing: border-box;
+  flex-flow: row nowrap;
+}
+
+.keywords-container .pCompany:hover {
+  background-color: #ddd;
+}
+.TEST {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: right;
+}

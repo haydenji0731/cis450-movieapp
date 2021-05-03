@@ -135,10 +135,98 @@ const bestMoviesPerDecadeGenre = (req, res) => {
   })
 };
 
+
+
+
+/* ---- (Production Company) ---- */
+const getPCompany = (req, res) => {
+   console.log(22222222)
+  var pCompName = req.params.pCompName;
+  var query = `
+With table1 as (
+Select pc.name, ABS(Length(pc.name) - Length('${pCompName}')) As similarity
+From production_company pc 
+Where pc.name Like '%${pCompName}%' 
+Order by similarity, pc.name
+limit 10)
+SELECT pc1.name as companyName, m1.movie_title as name, m1.vote_average as rating, m1.poster_path, m1.original_language, m1.overview
+FROM made_by mb1 JOIN production_company pc1 ON pc1.production_company_id = mb1.production_company_id JOIN movies m1 ON mb1.movie_id = m1.movie_id,table1
+where pc1.name like concat('%',table1.name,'%')
+ORDER BY Rating DESC
+Limit 10
+
+
+
+  `;
+   console.log(22222222)
+  connection.query(query, function(err, rows, field) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+};
+
+
+const getTopPCompanies = (req, res) => {
+  console.log (2222222222222)
+  var query = `
+ Select pc1.name,pc1.production_company_id, SUM(m1.revenue) as total_revenue
+From made_by mb1 JOIN movies m1 ON mb1.movie_id = m1.movie_id JOIN production_company pc1 ON mb1.production_company_id = pc1.production_company_id
+GROUP BY mb1.production_company_id
+ORDER BY SUM(m1.revenue) DESC
+LIMIT 10;
+
+
+  `;
+  connection.query(query, function(err, rows, field) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+};
+
+const getTopMatchingPCompanies = (req, res) => {
+  var input_pCompName = req.params.input_pCompName;
+  var query = `
+  With table1 as (
+ Select pc.name, ABS(Length(pc.name) - Length('${input_pCompName}')) As similarity
+From production_company pc 
+Where pc.name Like '%${input_pCompName}%' 
+Order by similarity, pc.name
+limit 1)
+select name 
+from table1;
+
+
+  `;
+  connection.query(query, function(err, rows, field) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+};
+
+
+
+
+
+
+
+
+
 module.exports = {
 	getTop20Keywords: getTop20Keywords,
 	getTopMovies: getTopMovies,
 	getKeywords: getKeywords,
+  getPCompany: getPCompany,
+  getTopPCompanies : getTopPCompanies,
+  getTopMatchingPCompanies : getTopMatchingPCompanies,
   getRecs: getRecs,
   getDecades: getDecades,
   getGenres: getGenres,
