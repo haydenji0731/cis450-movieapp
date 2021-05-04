@@ -113,7 +113,7 @@ export default class KeywordButton extends React.Component {
 
 	render() {
 		return (
-			<div className="movie">
+			<div className="movie" id={this.props.id} onClick={this.props.onClick}>
 				<div className="movie__poster">
 					<img src={"https://m.media-amazon.com/images/M"+this.props.path} 
 					alt = {this.props.title} 

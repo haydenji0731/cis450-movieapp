@@ -5,6 +5,7 @@
   flex-wrap: wrap;
   padding: 70px;
   padding-top: 70px;
+  padding-bottom: 10px;
   width: 100%;
 }
 
@@ -18,6 +19,12 @@
   padding: 20px;
   border-radius: 5px;
   color: #adaeb9;
+  box-shadow: 0 13px 27px -5px rgba(229, 9, 20, 0.25),
+    0 8px 16px -8px rgba(229, 9, 20, 0.3), 0 -6px 16px -6px rgba(229, 9, 20, 0.025);
+}
+.movies .profile-container {
+  width: 200px;
+  color: white;
   box-shadow: 0 13px 27px -5px rgba(229, 9, 20, 0.25),
     0 8px 16px -8px rgba(229, 9, 20, 0.3), 0 -6px 16px -6px rgba(229, 9, 20, 0.025);
 }
@@ -92,4 +99,6 @@ h2 {
 .netflix-sans-font-loaded {
   font-family: 'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
+
+
 

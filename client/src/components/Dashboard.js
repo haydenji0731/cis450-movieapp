@@ -59,6 +59,7 @@ export default class Dashboard extends React.Component {
   };
 
   showMovies(keyword) {
+    console.log("clicked");
     var url = "http://localhost:8081/keywords/" + keyword;
     console.log(url);
     fetch(url,
@@ -93,15 +94,17 @@ export default class Dashboard extends React.Component {
         {this.state.banner}
 
         <div class="netflix-sans-font-loaded">
-        <br></br>
-        <br></br>
+        <br></br><br></br><br></br>
         <h2>Top Ranking Movies</h2>
         <div className="movies">
               {this.state.keywords}
         </div>
-        <h2>Hello, World!</h2>
-        Enjoy movies from different parts of the world. We all miss traveling.
+        <h2>Who's In It?</h2>
+        <div className="movies">
+              {this.state.movies}
         </div>
+        </div>
+        <br></br><br></br><br></br><br></br>
       </div>
     );
   };
