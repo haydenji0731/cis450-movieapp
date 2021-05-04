@@ -50,7 +50,7 @@ var query = `WITH highest_ranked AS (SELECT movie_id, movie_title, vote_average 
              movie_keywords AS (SELECT m.movie_id, k.keyword, m.vote_average FROM movies m
              JOIN about a ON m.movie_id = a.movie_id
              JOIN keyword k ON k.keyword_id = a.keyword_id) SELECT keyword FROM movie_keywords
-             WHERE movie_id IN (SELECT movie_id FROM highest_ranked) ORDER BY vote_average DESC, keyword LIMIT 15;`;
+             WHERE movie_id IN (SELECT movie_id FROM highest_ranked) ORDER BY vote_average DESC, keyword LIMIT 30;`;
 
   connection.query(query, function(err, rows, fields) {
     if (err) console.log(err);
@@ -73,7 +73,7 @@ const getRecs = (req, res) => {
                  WHERE m.vote_average <= 10
                  GROUP BY m.movie_title
                  ORDER BY m.vote_average DESC, m.movie_title
-                 LIMIT 9;`;
+                 LIMIT 10;`;
   connection.query(query, function(err, rows, field) {
     if (err) console.log(err);
     else {
@@ -116,18 +116,6 @@ const getGenres = (req, res) => {
   });
 };
 
-const getOverviews = (req, res) => {
-  var movie_id = req.params.movie_id;
-  var query = `SELECT overview FROM movies WHERE movie_id = ${movie_id};`;
-  connection.query(query, function(err, rows, field) {
-    if (err) console.log(err);
-    else {
-      console.log(rows);
-      res.json(rows);
-    }
-  });
-};
-
 /* ---- Q3b (Best Movies) ---- */
 const bestMoviesPerDecadeGenre = (req, res) => {
   var decade = req.params.decade;
@@ -150,13 +138,88 @@ const bestMoviesPerDecadeGenre = (req, res) => {
   })
 };
 
+/*-- Actors -- */
+const getTopFives = (req, res) => {
+  var actor = req.params.actor;
+
+  const query = `WITH co_stars AS (SELECT s1.cast_id AS actor_id, s2.cast_id AS costar_id, a1.name AS actor, a2.name AS costar
+    FROM stars s1 
+      JOIN stars s2 ON s1.movie_id = s2.movie_id
+      JOIN actors a1 ON a1.cast_id = s1.cast_id
+      JOIN actors a2 ON a2.cast_id = s2.cast_id
+    WHERE a1.name <> a2.name AND a1.name = "`+ actor +`"),
+  top5_costars AS (SELECT actor, costar, COUNT(*) AS costarred_movies_count
+    FROM co_stars
+    GROUP BY costar
+    ORDER BY costarred_movies_count DESC
+    LIMIT 5),
+  profit_table AS (SELECT *, (revenue - budget) AS profit 
+    FROM movies 
+      NATURAL JOIN stars
+      NATURAL JOIN actors
+    WHERE actors.name = '`+ actor +`'),
+  top5_profit AS (SELECT name AS actor, movie_title, profit
+    FROM profit_table
+    ORDER BY profit DESC
+    LIMIT 5),
+  cast_table AS (SELECT *, (revenue - budget) AS profit 
+    FROM movies 
+      NATURAL JOIN stars
+      NATURAL JOIN actors
+      NATURAL JOIN movie_genre
+      NATURAL JOIN genre
+    WHERE actors.name = '`+ actor +`'),
+  top5_genre AS (SELECT name AS actor, genre, COUNT(*) AS count
+    FROM cast_table
+    GROUP BY genre
+    ORDER BY count DESC
+    LIMIT 5), 
+  prod AS (SELECT m.movie_id, production_company_id, production_company.name AS prod_co_name, a.cast_id, a.name AS actor_name
+    FROM movies m
+      NATURAL JOIN made_by
+      NATURAL JOIN production_company
+      JOIN stars s ON m.movie_id = s.movie_id
+      JOIN actors a ON s.cast_id = a.cast_id),
+  top5_prod AS (SELECT actor_name AS actor, prod_co_name, COUNT(*) AS prod_co_count
+    FROM prod
+    WHERE actor_name = '`+ actor +`'
+    GROUP BY prod_co_name
+    ORDER BY prod_co_count DESC
+    LIMIT 5)
+  SELECT a.row_num AS _rank,
+     costar AS top_costars,
+       movie_title AS most_profitable_movies,
+       genre AS top_genres, 
+       prod_co_name AS top_production_companies
+  FROM (SELECT *, ROW_NUMBER() OVER(ORDER BY actor) row_num
+    FROM top5_costars) a
+  JOIN (SELECT *, ROW_NUMBER() OVER(ORDER BY actor) row_num
+    FROM top5_profit) b
+      ON a.row_num = b.row_num
+  JOIN (SELECT *, ROW_NUMBER() OVER(ORDER BY actor) row_num
+    FROM top5_genre) c
+      ON a.row_num = c.row_num
+  JOIN (SELECT *, ROW_NUMBER() OVER(ORDER BY actor) row_num
+    FROM top5_prod) d
+      ON a.row_num = d.row_num`;
+  
+  connection.query(query, function(err, rows, field) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+}; 
+
 module.exports = {
 	getTop20Keywords: getTop20Keywords,
 	getTopMovies: getTopMovies,
 	getKeywords: getKeywords,
   getRecs: getRecs,
-  getOverviews: getOverviews,
   getDecades: getDecades,
   getGenres: getGenres,
-  bestMoviesPerDecadeGenre: bestMoviesPerDecadeGenre
+  bestMoviesPerDecadeGenre: bestMoviesPerDecadeGenre,
+  getTopFives: getTopFives
 };
+
