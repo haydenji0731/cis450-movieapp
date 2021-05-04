@@ -24,6 +24,8 @@
 }
 .movies .profile-container {
   width: 200px;
+  font-weight: 400;
+  font-size: 18px;
   color: white;
   box-shadow: 0 13px 27px -5px rgba(229, 9, 20, 0.25),
     0 8px 16px -8px rgba(229, 9, 20, 0.3), 0 -6px 16px -6px rgba(229, 9, 20, 0.025);
@@ -100,5 +102,24 @@ h2 {
   font-family: 'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 
+.more__button{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items : center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-size : 18px;
+  font-weight: 700;
+  border-radius: 0.2vw;
+  padding : 0.4rem 1.8rem 0.4rem 1.8rem;
+}
+
+.more__button:hover{
+  color: #000;
+  background-color: rgba(170, 170, 170, 0.9);
+  transition: all 0.2s;
+}
 
 

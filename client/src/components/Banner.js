@@ -37,9 +37,7 @@ export default class Banner extends React.Component {
                 <h1 className="banner__title">{this.props.title}</h1>
                 <div className="banner__buttons">
                     <button className="banner__button play" onClick={this.showTrailer}><PlayArrowIcon />Watch Trailer</button>
-                    
                 </div>
-
                 <h1 className="banner__description">{this.props.overview}</h1>
             </div>   
             <div className="banner--fadeBottom"/>

@@ -36,7 +36,7 @@ export default class PageNavbar extends React.Component {
 			<div className="PageNavbar">
 			<nav className="navbar navbar-expand-sm navbar-custom">
 			<span className="navbar-brand center">
-			<img src={Logo} alt="website logo" width="110" height="45"/>
+			<img src={Logo} alt="website logo" width="110" height="45" style={{marginLeft: 35}}/>
 			</span>
 			<div class="container-fluid">
 			  <nav class="navbar navbar-inverse">
@@ -44,7 +44,6 @@ export default class PageNavbar extends React.Component {
 			      <ul class="nav navbar-nav">
 						  <button type="button" href="/dashboard" class="btn btn-primary">{this.state.navDivs[0]}</button>
 							<button type="button" href="/recommendations" class="btn btn-primary">{this.state.navDivs[1]}</button>
-							<button type="button" href="/filter" class="btn btn-primary">{this.state.navDivs[2]}</button>
 							<button type="button" href="/companies" class="btn btn-primary">{this.state.navDivs[3]}</button>
 							<button type="button" href="/actors" class="btn btn-primary">{this.state.navDivs[4]}</button>
 			      </ul>

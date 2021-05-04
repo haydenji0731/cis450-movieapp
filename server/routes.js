@@ -8,7 +8,9 @@ const connection = mysql.createPool(config);
 /* ------------------- Route Handlers --------------- */
 /* -------------------------------------------------- */
 
-const getTop20Keywords = (req, res) => {
+/* ---- (Dashboard) ---- */
+
+const getTopMovies = (req, res) => {
   var query = `WITH intermediate AS (SELECT m.movie_id, m.movie_title as movie, m.overview, m.poster_path as path, m.back_path FROM movies m
     WHERE m.vote_count > (SELECT AVG(vote_count) FROM movies)
     ORDER BY m.vote_average DESC, m.movie_title LIMIT 10)
@@ -22,15 +24,10 @@ const getTop20Keywords = (req, res) => {
       });
     };
 
-
-const getTopMovies = (req, res) => {
-  var movie = req.params.keyword;
+const getAssociatedStars = (req, res) => {
+  var movie = req.params.movie;
   var query=`WITH tmp AS (SELECT s.cast_id AS cast_id FROM movies m JOIN stars s ON m.movie_id = s.movie_id WHERE m.movie_title LIKE '%${movie}%')
             SELECT a.cast_id, a.name, a.gender, a.profile_path FROM actors a JOIN tmp on a.cast_id = tmp.cast_id LIMIT 5;`;
-  // var query = `WITH intermediate AS (SELECT m.movie_id, m.movie_title as movie, m.overview, m.vote_average as rating FROM movies m
-  //              WHERE m.vote_count > (SELECT AVG(vote_count) FROM movies)
-  //              ORDER BY m.vote_average DESC, m.movie_title LIMIT 10)
-  //              SELECT m.movie, m.overview, g.genre, m.rating FROM intermediate m JOIN movie_genre mg ON mg.movie_id = m.movie_id JOIN genre g ON g.genre_id = mg.genre_id GROUP BY m.movie;`;
   connection.query(query, function(err, rows, field) {
     if (err) console.log(err);
     else {
@@ -41,7 +38,8 @@ const getTopMovies = (req, res) => {
 };
 
 
-/* ---- Q2 (Recommendations) ---- */
+/* ---- (Recommendations) ---- */
+
 const getKeywords = (req, res) => {
 var query = `WITH highest_ranked AS (SELECT movie_id, movie_title, vote_average FROM movies
              ORDER BY vote_average DESC LIMIT 600),
@@ -213,8 +211,8 @@ const getTopFives = (req, res) => {
 }; 
 
 module.exports = {
-	getTop20Keywords: getTop20Keywords,
 	getTopMovies: getTopMovies,
+  getAssociatedStars: getAssociatedStars,
 	getKeywords: getKeywords,
   getRecs: getRecs,
   getDecades: getDecades,

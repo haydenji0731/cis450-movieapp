@@ -2,7 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/MovieButton.css';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
-import DashboardMovieRow from './DashboardMovieRow';
 
 export default class KeywordButton extends React.Component {
 	constructor(props) {
@@ -26,7 +25,6 @@ export default class KeywordButton extends React.Component {
 		this.getGenres = this.getGenres.bind(this);
 		this.showGenres = this.showGenres.bind(this);
 		this.showTrailer = this.showTrailer.bind(this);
-		this.showInfo = this.showInfo.bind(this);
 	};
 
 	componentDidMount() {
@@ -83,33 +81,6 @@ export default class KeywordButton extends React.Component {
 		var query='https://www.youtube.com/results?search_query='+this.props.title.replace(" ", "+")+'trailer'
         window.location = query;
 	}
-
-	showInfo(movie) {
-		var url = "http://localhost:8081/keywords/" + movie;
-		console.log(url);
-		fetch(url,
-		  {
-			method: 'GET'
-		  }).then(res => {
-			return res.json();
-		  }, err => {
-			console.log(err);
-		  }).then(moviesList => {
-			if (!moviesList) return;
-			const moviesDivs = moviesList.map((movieObj, i) =>
-			<DashboardMovieRow
-				movie = {movieObj.name}
-				overview = {movieObj.profile_path}
-			  />
-			);
-		  this.setState({
-			movies: moviesDivs
-		  });
-		}, err => {
-		  console.log(err);
-		});
-	}
-
 
 	render() {
 		return (

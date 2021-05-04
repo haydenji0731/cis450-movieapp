@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import '../style/DashboardMovieRow.css';
+import '../style/DashboardStarRow.css';
 
 export default class DashboardMovieRow extends React.Component {
 

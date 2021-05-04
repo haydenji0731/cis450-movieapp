@@ -15,15 +15,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 /* ---------------------------------------------------------------- */
 
 /* ---- (Dashboard) ---- */
-// The route localhost:8081/keywords is registered to the function
-// routes.getTop20Keywords, specified in routes.js.
-app.get('/keywords', routes.getTop20Keywords);
+app.get('/dashboard', routes.getTopMovies);
 
-/* ---- Q1b (Dashboard) ---- */
-app.get('/keywords/:keyword', routes.getTopMovies);
+app.get('/dashboard/:movie', routes.getAssociatedStars);
 
-/* ---- Q2 (Recommendations) ---- */
-// check if the uid portion is correct
+/* ---- (Recommendations) ---- */
 app.get('/keywordsDropdown', routes.getKeywords);
 
 //get movie recommendations based on keyword search
