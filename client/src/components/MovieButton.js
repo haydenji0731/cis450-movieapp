@@ -1,7 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/MovieButton.css';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import DashboardMovieRow from './DashboardMovieRow';
 
 export default class KeywordButton extends React.Component {
 	constructor(props) {
@@ -83,17 +84,39 @@ export default class KeywordButton extends React.Component {
         window.location = query;
 	}
 
-	showInfo() {
-
+	showInfo(movie) {
+		var url = "http://localhost:8081/keywords/" + movie;
+		console.log(url);
+		fetch(url,
+		  {
+			method: 'GET'
+		  }).then(res => {
+			return res.json();
+		  }, err => {
+			console.log(err);
+		  }).then(moviesList => {
+			if (!moviesList) return;
+			const moviesDivs = moviesList.map((movieObj, i) =>
+			<DashboardMovieRow
+				movie = {movieObj.name}
+				overview = {movieObj.profile_path}
+			  />
+			);
+		  this.setState({
+			movies: moviesDivs
+		  });
+		}, err => {
+		  console.log(err);
+		});
 	}
 
 
 	render() {
 		return (
 			<div className="movie">
-				<div className="movie__poster" onClick={this.handleClick}>
+				<div className="movie__poster">
 					<img src={"https://m.media-amazon.com/images/M"+this.props.path} 
-					alt = {this.props.title}
+					alt = {this.props.title} 
 					width="160" height="230" />
 				</div>
 				<div className="movie__data">
