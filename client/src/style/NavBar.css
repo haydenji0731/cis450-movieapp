@@ -51,10 +51,12 @@
 }
 
 .hoverable:hover, .hoverable:active, .hoverable:focus{
+  color: #E50914;
   transform: translateY(-5px);
 }
 .hoverable:hover:before, .hoverable:active:before, .hoverable:focus:before{
   opacity: 1;
+  color: #E50914;
   transform: translateY(-5px);
 }
 
@@ -103,7 +105,7 @@
 }
 
 .navbar .dropdown-item.active, .navbar .dropdown-item:active {
-    color: inherit;
+    color: white;
     text-decoration: none;
     background-color: inherit;
 }
@@ -116,6 +118,7 @@
 
 @media (min-width: 767px) {
     .navbar .dropdown-toggle:not(.nav-link)::after {
+      color: white;
         display: inline-block;
         width: 0;
         height: 0;
@@ -125,4 +128,8 @@
         border-top: .3em solid transparent;
         border-left: .3em solid;
     }
+}
+
+.netflix-sans-font-loaded {
+  font-family: 'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }

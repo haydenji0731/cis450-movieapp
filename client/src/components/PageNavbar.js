@@ -1,10 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Logo from './logo.png';
 import '../style/Recommendations.css';
 import '../style/NavBar.css';
-
-console.log(Logo);
+import Logo from './pennFlix_web.png'
 
 export default class PageNavbar extends React.Component {
 	constructor(props) {
@@ -34,9 +32,12 @@ export default class PageNavbar extends React.Component {
 
 	render() {
 		return (
+			<div class="netflix-sans-font-loaded">
 			<div className="PageNavbar">
 			<nav className="navbar navbar-expand-sm navbar-custom">
-			<span className="navbar-brand center">PennFlix</span>
+			<span className="navbar-brand center">
+			<img src={Logo} alt="website logo" width="110" height="45"/>
+			</span>
 			<div class="container-fluid">
 			  <nav class="navbar navbar-inverse">
 			    <div class="container-fluid">
@@ -50,8 +51,8 @@ export default class PageNavbar extends React.Component {
 			    </div>
 			  </nav>
 			</div>
-			<img src={Logo} alt="website logo" width="160" height="130"/>
 			</nav>
+			</div>
 			</div>
     );
 	};

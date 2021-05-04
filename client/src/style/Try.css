@@ -2,8 +2,8 @@
   opacity: 0.2;
 }
 
-body { background: url('./BG1Trans.png'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;
-  background-position: center;}
+/* body { background: url('./BG1Trans.png'); background-size: cover; background-repeat: no-repeat; background-attachment: fixed;
+  background-position: center;} */
 
 .header-container, .results-container {
   display: flex;

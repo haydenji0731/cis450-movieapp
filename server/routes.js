@@ -9,10 +9,10 @@ const connection = mysql.createPool(config);
 /* -------------------------------------------------- */
 
 const getTop20Keywords = (req, res) => {
-  var query = `WITH intermediate AS (SELECT m.movie_id, m.movie_title as movie, m.overview, m.poster_path as path FROM movies m
+  var query = `WITH intermediate AS (SELECT m.movie_id, m.movie_title as movie, m.overview, m.poster_path as path, m.back_path FROM movies m
     WHERE m.vote_count > (SELECT AVG(vote_count) FROM movies)
     ORDER BY m.vote_average DESC, m.movie_title LIMIT 10)
-    SELECT m.movie, m.overview, g.genre, m.path, m.movie_id FROM intermediate m JOIN movie_genre mg ON mg.movie_id = m.movie_id JOIN genre g ON g.genre_id = mg.genre_id GROUP BY m.movie;`;
+    SELECT m.movie, m.overview, g.genre, m.path, m.movie_id, m.back_path FROM intermediate m JOIN movie_genre mg ON mg.movie_id = m.movie_id JOIN genre g ON g.genre_id = mg.genre_id GROUP BY m.movie;`;
       connection.query(query, function(err, rows, field) {
         if (err) console.log(err);
         else {

@@ -1,93 +1,45 @@
-/* .keywords-container {
-  /* margin: 10px 0; */
-  /* display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start; */
-  /* border-bottom: 1px solid #ddd; */
-/* } */ 
-
-.keywords-container .keyword {
-  /* flex: 1 0 20%; */
-  margin: 5px 0;
-  padding: 10px;
-  cursor: pointer;
-  align-items: center;
-  box-sizing: border-box;
-  flex-flow: row nowrap;
-}
-
-.keywords-container .keyword:hover {
-  background-color: #ddd;
-}
-
-.movies-container .movies-header, .results-container {
-  display: flex;
-  height: 270px;
-  flex-flow: column;
-}
-
-.movie .title, .movies-header .header-lg {
-  margin: 5px 0;
-  padding: 10px;
-  cursor: pointer;
-  align-items: center;
-  box-sizing: border-box;
-  flex-flow: row nowrap;
-}
-
-.movies-header .header, .movie .rating, .movie .votes {
-  margin: 5px 0;
-  padding: 10px;
-  cursor: pointer;
-  align-items: center;
-  box-sizing: border-box;
-  flex-flow: row nowrap;
-}
-
 .movies {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: flex-start;
   flex-wrap: wrap;
-  padding: 50px;
+  padding: 70px;
   padding-top: 70px;
-  width: 80%;
+  width: 100%;
 }
 
 .movies .movie {
   width: 45%;
-  background-color: white;
   margin-bottom: 70px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   font-weight: 300;
   padding: 20px;
   border-radius: 5px;
   color: #adaeb9;
-  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  box-shadow: 0 13px 27px -5px rgba(229, 9, 20, 0.25),
+    0 8px 16px -8px rgba(229, 9, 20, 0.3), 0 -6px 16px -6px rgba(229, 9, 20, 0.025);
 }
 
 .movie img {
   position: relative;
   top: -50px;
-  max-width: 120px;
+  max-width: 140px;
   margin-right: 30px;
   box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
     0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
 }
 
-.movie .movie__title,
-.movie .movie__year {
+.movie .movie__title {
   margin: 0;
-  font-weight: 300;
+  font-weight: 700;
 }
 
 .movie .movie__title {
   margin-bottom: 5px;
-  font-size: 24px;
-  color: #2c2c2c;
+  font-size: 22px;
+  color: #fff;
 }
 
 .movie .movie__genres {
@@ -96,12 +48,18 @@
   margin: 0;
   display: flex;
   margin: 5px 0px;
+  font-weight: 500;
+  font-size: 12px;
 }
 
-.movie__genres li,
-.movie .movie__year {
+.movie .movie__summary {
   margin-right: 10px;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.movie .movie__poster:hover {
+  transform: scale(1.08);
 }
 
 * {
@@ -112,16 +70,25 @@ body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Bebas Neue;
   background-color: #eff3f7;
   height: 100%;
 }
 
 html,
 body,
-#potato,
 .container {
   height: 100%;
   display: flex;
   justify-content: center;
+}
+
+h2 {
+  padding-left: 20px;
+  margin-left: 50px;
+  color: white;
+}
+
+.netflix-sans-font-loaded {
+  font-family: 'Netflix Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
