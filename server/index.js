@@ -37,6 +37,11 @@ app.get('/bestMovies/:decade/:genre', routes.bestMoviesPerDecadeGenre);
 /* -- Actors -- */
 app.get('/actors/:actor', routes.getTopFives);
 
+/* -- Companies -- */
+app.get('/Company/:companyName', routes.getTopFiveCompany);
+
+
+
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);
 });

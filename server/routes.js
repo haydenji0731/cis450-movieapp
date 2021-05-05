@@ -210,6 +210,109 @@ const getTopFives = (req, res) => {
   });
 }; 
 
+
+const getTopFiveCompany = (req, res) => {
+  var pCompName = req.params.companyName;
+  console.log("queryRunning");
+  console.log(pCompName);
+  const query = `
+With table1 as (
+Select pc.name, ABS(Length(pc.name) - Length('${pCompName}')) As similarity
+From production_company pc 
+Where pc.name Like '%${pCompName}%' 
+Order by similarity, pc.name
+limit 1),
+
+ movies_counts As (
+Select Count(*) as num 
+From production_company pc1 JOIN made_by mb1 ON pc1.production_company_id = mb1.production_company_id
+JOIN movies m1 ON mb1.movie_id = m1.movie_id , table1
+where pc1.name LIKE concat('%',table1.name,'%')
+), 
+
+95percentile_vote AS (
+SELECT vote_count as 95percentile 
+FROM (SELECT t.*,  @row_num :=@row_num + 1 AS row_num FROM movies t, 
+    (SELECT @row_num:=0) counter ORDER BY vote_count) 
+temp WHERE temp.row_num = ROUND (.95* @row_num)
+ ),
+
+mean_vote As (
+select ceiling(AVG(vote_count)) as mean_vote
+from movies
+), 
+
+TOP5weightedRatedMovies  AS (
+Select m1.movie_id, m1.movie_title, (m1.revenue - m1.budget) as profit, ((m1.vote_count * m1.vote_average)/(t1.95percentile + m1.vote_count) + (t1.95percentile * mv1. mean_vote)/(t1.95percentile + m1.vote_count)) as rating
+From production_company pc1 JOIN made_by mb1 ON pc1.production_company_id = mb1.production_company_id JOIN movies m1 ON mb1.movie_id = m1.movie_id , 95percentile_vote t1, mean_vote mv1, table1
+where pc1.name LIKE concat('%',table1.name,'%') AND m1.revenue - m1.budget > 1000 AND m1.vote_count > t1.95percentile
+order by rating desc
+limit 5
+), 
+
+all_movies_details AS (
+Select m1.movie_id, m1.movie_title, (m1.budget - m1.revenue) as profit, m1.vote_average, m1.vote_count
+From production_company pc1 JOIN made_by mb1 ON pc1.production_company_id = mb1.production_company_id
+JOIN movies m1 ON mb1.movie_id = m1.movie_id, table1
+where pc1.name LIKE concat('%',table1.name,'%')),
+
+
+Top5_profitable_movies  AS (
+select all_movies_details.movie_title
+from all_movies_details
+order by all_movies_details.profit Desc
+limit 5
+),
+
+Top5_rated_movies  AS (
+select movie_title
+from all_movies_details
+order by vote_average DESC
+limit 5 ),
+
+TOP5_genre AS (
+Select g1.genre, count(*) as count
+from all_movies_details m1 JOIN  movie_genre mg1 ON m1.movie_id = mg1.movie_id JOIN genre g1 ON mg1.genre_id = g1.genre_id 
+Group by g1.genre
+Order by count desc
+limit 5 ),
+
+TOP5_keyword AS (
+Select k1.keyword, count(*) as count
+from all_movies_details m1 JOIN  about a1 ON m1.movie_id = a1.movie_id JOIN keyword k1 ON k1.keyword_id = a1.keyword_id 
+Group by k1.keyword
+Order by count desc
+limit 5 )
+
+ SELECT a.row_num AS _rank, a.movie_title AS Top5ProfitableMovies,
+  b.movie_title AS Top5WeightedRatedMovies, c.movie_title as Top5RatedMovies,
+  d.genre as Top5Genres, e.keyword as Top5Keywords, table1.name
+
+from ( SELECT *, ROW_NUMBER() OVER() row_num
+    FROM Top5_profitable_movies) a
+JOIN (SELECT *, ROW_NUMBER() OVER() row_num
+    FROM TOP5weightedRatedMovies) b
+ON a.row_num = b.row_num
+JOIN (SELECT *, ROW_NUMBER() OVER() row_num
+    FROM Top5_rated_movies) c
+ON a.row_num = c.row_num
+JOIN (SELECT *, ROW_NUMBER() OVER() row_num
+    FROM TOP5_genre) d
+ON a.row_num = d.row_num
+JOIN (SELECT *, ROW_NUMBER() OVER() row_num
+    FROM TOP5_keyword) e
+ON a.row_num = e.row_num, table1`;
+  
+  connection.query(query, function(err, rows, field) {
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+}; 
+
+
 module.exports = {
 	getTopMovies: getTopMovies,
   getAssociatedStars: getAssociatedStars,
@@ -217,6 +320,7 @@ module.exports = {
   getRecs: getRecs,
   getDecades: getDecades,
   getGenres: getGenres,
+  getTopFiveCompany : getTopFiveCompany,
   bestMoviesPerDecadeGenre: bestMoviesPerDecadeGenre,
   getTopFives: getTopFives
 };
