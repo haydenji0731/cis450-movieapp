@@ -1,0 +1,5 @@
+.profile-container {
+    display: flex;
+    height: 230px;
+    flex-flow: column;
+}

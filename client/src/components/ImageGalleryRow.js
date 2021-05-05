@@ -64,8 +64,8 @@ export default class ImageGalleryRow extends React.Component {
 	render() {
 		return (
 			<div>
-			<div class="paddedRow">
-  				<div class="column">
+			<div class="row">
+					<div class="column">
 						<div className="modal__wrapper">
 							<div className="modal__relevance" onMouseOver={e => {this.handleFirstHover();}} onMouseLeave={this.handleFirstLeave}>
 								{this.props.firstMovie}
@@ -73,24 +73,53 @@ export default class ImageGalleryRow extends React.Component {
 							</div>
 						</div>
 					</div>
-  				<div class="column">
+					<div class="column">
 						<div className="modal__wrapper">
 							<div className="modal__relevance" onMouseOver={e => {this.handleSecondHover();}} onMouseLeave={this.handleSecondLeave}>
 								{this.props.secondMovie}
 								{this.state.secondOverview}
 							</div>
 						</div>
-				  </div>
-  				<div class="column">
+					</div>
+					<div class="column">
 						<div className="modal__wrapper">
 							<div className="modal__relevance" onMouseOver={e => {this.handleThirdHover();}} onMouseLeave={this.handleThirdLeave}>
 								{this.props.thirdMovie}
 								{this.state.thirdOverview}
 							</div>
 						</div>
-  				</div>
+					</div>
 			</div>
 			</div>
 		);
 	};
 };
+
+// <div>
+// <div class="paddedRow">
+// 		<div class="column">
+// 			<div className="modal__wrapper">
+// 				<div className="modal__relevance" onMouseOver={e => {this.handleFirstHover();}} onMouseLeave={this.handleFirstLeave}>
+// 					{this.props.firstMovie}
+// 					{this.state.firstOverview}
+// 				</div>
+// 			</div>
+// 		</div>
+// 		<div class="column">
+// 			<div className="modal__wrapper">
+// 				<div className="modal__relevance" onMouseOver={e => {this.handleSecondHover();}} onMouseLeave={this.handleSecondLeave}>
+// 					{this.props.secondMovie}
+// 					{this.state.secondOverview}
+// 				</div>
+// 			</div>
+// 		</div>
+// 		<div class="column">
+// 			<div className="modal__wrapper">
+// 				<div className="modal__relevance" onMouseOver={e => {this.handleThirdHover();}} onMouseLeave={this.handleThirdLeave}>
+// 					{this.props.thirdMovie}
+// 					{this.state.thirdOverview}
+// 				</div>
+// 			</div>
+// 		</div>
+// </div>
+// </div>

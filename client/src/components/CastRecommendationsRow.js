@@ -5,7 +5,7 @@ import '../style/Recommendations.css';
 
 console.log(Logo);
 
-export default class RecommendationsRow extends React.Component {
+export default class CastRecommendationsRow extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -22,23 +22,22 @@ export default class RecommendationsRow extends React.Component {
 	};
 
 	componentDidMount() {
-		console.log(this.props.title);
-		console.log(this.props.id);
-		this.getGenres(this.props.id);
+		this.getGenres(this.props.keyword, this.props.id);
 	};
 
 	componentDidUpdate(prevProps) {
 	  if (this.props.id !== prevProps.id) {
-	    this.getGenres(this.props.id);
+	    this.getGenres(this.props.keyword, this.props.id);
 	  }
 	}
 
-	callbackFunction(movie) {
-		this.props.parentCallback(movie);
+	callbackFunction(cast) {
+		this.props.parentCallback(cast);
 	};
 
-	getGenres(movie_id) {
-		var url = "http://localhost:8081/genres/"+movie_id;
+  //this function gets the genres of the movies that the actor has acted in with the input keyword
+	getGenres(keyword, cast_id) {
+		var url = "http://localhost:8081/castGenres/"+keyword + "/" + cast_id;
 		fetch(url,
 		{
 			method: 'GET'
@@ -47,7 +46,6 @@ export default class RecommendationsRow extends React.Component {
 		}, err => {
 			console.log(err);
 		}).then(data => {
-		// Here you need to use an temporary array to store NeededInfo only
 		let genresResult = []
 		for (var i = 0; i < data.length; i++) {
 			genresResult.push(data[i].genre);
@@ -79,24 +77,16 @@ export default class RecommendationsRow extends React.Component {
 				<div class="flip-display">
 					<div class="flip-display-inner">
 						<div class="flip-display-front">
-							<img src={"https://m.media-amazon.com/images/M"+this.props.path} alt={this.props.title} width="240" height="345"/>
+							<img src={"https://www.themoviedb.org/t/p/w200"+this.props.path} alt={this.props.name} width="240" height="345"/>
 						</div>
 
 						<div class="flip-display-back">
-  						<div class="centered"><p><h5>{this.props.title}</h5></p>
+  						<div class="centered"><p><h5>{this.props.name}</h5></p>
 							<p>Keyword: {this.props.keyword}</p>
-  						<p>Genres: {this.state.genresDisplay}</p>
-  						<row>Rating: {this.props.rating}</row></div>
+  						<p>Genres: {this.state.genresDisplay}</p></div>
 						</div>
 					</div>
 				</div>
 		);
 	};
 };
-
-// <div class="flip-display-back">
-//   <br></ br>
-// 	<row><h5>{this.props.title}</h5></row>
-// 	<p class='header-text'>Genres: {this.state.genresDisplay}</p>
-// 	<row>Rating: {this.props.rating}</row>
-// </div>

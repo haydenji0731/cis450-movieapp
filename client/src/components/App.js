@@ -8,7 +8,9 @@ import Dashboard from './Dashboard';
 import Recommendations from './Recommendations';
 import BestMovies from './BestMovies';
 import Companies from './Companies';
-import Filter from './Filter';
+import CompaniesPart1 from './CompaniesPart1';
+import RecGenre from './RecGenre';
+import CastRecs from './CastRecs';
 import Actors from './Actors';
 import Try from './Try';
 
@@ -42,8 +44,16 @@ export default class App extends React.Component {
 							render={() => <Companies />}
 						/>
 						<Route
-							path="/filter"
-							render={() => <Filter />}
+							path="/companiesPart1"
+							render={() => <CompaniesPart1 />}
+						/>
+						<Route
+							path="/recGenre"
+							render={() => <RecGenre />}
+						/>
+						<Route
+							path="/Cast Recommendations"
+							render={() => <CastRecs />}
 						/>
 						<Route
 							path="/actors"

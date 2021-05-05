@@ -23,34 +23,3 @@
   width: 700px;
   height: 100px;
 }
-
-.banner__buttons{
-  display: flex;
-  flex-direction : row;
-}
-.banner__button{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items : center;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  font-size : 14px;
-  font-weight: 700;
-  border-radius: 0.2vw;
-  padding : 0.4rem 1.8rem 0.4rem 1rem;
-  margin-right: 1rem;
-  width: 110px;
-
-}
-.banner__button:hover{
-  color: #000;
-  background-color: rgba(170, 170, 170, 0.9);
-  transition: all 0.2s;
-}
-.play{
-  background-color: white;
-  color: black;
-  width: 40;
-}

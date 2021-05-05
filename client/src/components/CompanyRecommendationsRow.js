@@ -5,7 +5,7 @@ import '../style/Recommendations.css';
 
 console.log(Logo);
 
-export default class RecommendationsRow extends React.Component {
+export default class CompanyRecommendationsRow extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -84,7 +84,7 @@ export default class RecommendationsRow extends React.Component {
 
 						<div class="flip-display-back">
   						<div class="centered"><p><h5>{this.props.title}</h5></p>
-							<p>Keyword: {this.props.keyword}</p>
+							<p>Production Company: {this.props.companyName}</p>
   						<p>Genres: {this.state.genresDisplay}</p>
   						<row>Rating: {this.props.rating}</row></div>
 						</div>

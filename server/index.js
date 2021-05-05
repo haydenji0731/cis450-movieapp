@@ -29,6 +29,10 @@ app.get('/recs/:keyword', routes.getRecs);
 app.get('/decades', routes.getDecades);
 app.get('/genres/:movie_id', routes.getGenres);
 
+app.get('/overviews/:movie_id', routes.getOverviews);
+
+app.get('/castRecs/:keyword', routes.getCastRecs);
+app.get('/castGenres/:keyword/:cast_id', routes.getCastGenres);
 
 /* ---- Q3b (Best Movies) ---- */
 
@@ -40,7 +44,8 @@ app.get('/actors/:actor', routes.getTopFives);
 /* -- Companies -- */
 app.get('/Company/:companyName', routes.getTopFiveCompany);
 
-
+app.get('/pCompany/:pCompName', routes.getPCompany);
+app.get('/pCompanyList', routes.getTopPCompanies);
 
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);

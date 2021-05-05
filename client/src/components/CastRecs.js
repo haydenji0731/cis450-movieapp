@@ -1,27 +1,27 @@
 import React from 'react';
 import PageNavbar from './PageNavbar';
-import RecommendationsRow from './RecommendationsRow';
-import ImageGalleryRow from './ImageGalleryRow';
+import CastRecommendationsRow from './CastRecommendationsRow';
+import CastImageGalleryRow from './CastImageGalleryRow';
 import '../style/Recommendations.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import KeywordButton from './KeywordRecPageButton';
 import BG1 from './bg1.jpg';
 
-export default class Recommendations extends React.Component {
+export default class CastRecs extends React.Component {
 	constructor(props) {
 		super(props);
 
 		// State maintained by this React component is the selected movie name, and the list of recommended movies.
 		this.state = {
 			keyword: "",
-			recMovies: [],
+			recCast: [],
 			keywords: [],
 			toWatchList: [],
 			showToWatchList: [],
 			originalDisplay: [],
 			imageGallery: [],
-			recMoviesIds: [],
-			recMoviesOverviews: [],
+			recCastIds: [],
+			recCastProfiles: [],
 		};
 
 		this.handleKeywordChange = this.handleKeywordChange.bind(this);
@@ -54,7 +54,7 @@ export default class Recommendations extends React.Component {
 	};
 
 	submitKeyword(keyword) {
-		var url = "http://localhost:8081/recs/"+keyword;
+		var url = "http://localhost:8081/castRecs/"+keyword;
 		fetch(url,
 		{
 			method: 'GET'
@@ -64,29 +64,26 @@ export default class Recommendations extends React.Component {
 			console.log(err);
 		}).then(recsList => {
 			if (recsList.ok) return;
-				const recMoviesIdsIntermediate = [];
-				const recMoviesOverviewsIntermediate = [];
+				const recCastIdsIntermediate = [];
+				const recCastProfilesIntermediate = [];
 				for (var i = 0; i < recsList.length; i++) {
-					recMoviesIdsIntermediate.push(recsList[i].id);
-					recMoviesOverviewsIntermediate.push(recsList[i].overview);
+					recCastIdsIntermediate.push(recsList[i].id);
+					recCastProfilesIntermediate.push(recsList[i].path);
 				}
-				const recsDivs = recsList.map((movieObj, i) =>
-				< RecommendationsRow
-					id = {movieObj.id}
-					title = {movieObj.title}
-					overview = {movieObj.overview}
-					keyword = {movieObj.keyword}
-					genre = {movieObj.genre}
-					rating = {movieObj.rating}
-					query = {movieObj.query}
-					path= {movieObj.path}
+				const recsDivs = recsList.map((castObj, i) =>
+				< CastRecommendationsRow
+					id = {castObj.id}
+					keyword = {castObj.keyword}
+					name = {castObj.name}
+					path= {castObj.path}
+					gender = {castObj.gender}
 					parentCallback = {this.parentCallback}
 				/>
 			);
 			this.setState({
-				recMovies: recsDivs,
-				recMoviesIds: recMoviesIdsIntermediate,
-				recMoviesOverviews: recMoviesOverviewsIntermediate
+				recCast: recsDivs,
+				recCastIds: recCastIdsIntermediate,
+				recCastProfiles: recCastProfilesIntermediate
 			}
 		);
 		this.createImageGallery();
@@ -97,19 +94,11 @@ export default class Recommendations extends React.Component {
 
   createImageGallery() {
 		var imageGalleryIntermediate = [];
-		for (var i = 0; i < this.state.recMovies.length; i = i + 3) {
-			const oneMovie = < ImageGalleryRow
-				firstMovie = {this.state.recMovies[i]}
-				secondMovie = {this.state.recMovies[i + 1]}
-				thirdMovie = {this.state.recMovies[i + 2]}
-
-				firstMovieId= {this.state.recMoviesIds[i]}
-				secondMovieId = {this.state.recMoviesIds[i + 1]}
-				thirdMovieId = {this.state.recMoviesIds[i + 2]}
-
-				firstMovieOverview= {this.state.recMoviesOverviews[i]}
-				secondMovieOverview = {this.state.recMoviesOverviews[i + 1]}
-				thirdMovieOverview = {this.state.recMoviesOverviews[i + 2]}
+		for (var i = 0; i < this.state.recCast.length; i = i + 3) {
+			const oneMovie = < CastImageGalleryRow
+				firstMovie = {this.state.recCast[i]}
+				secondMovie = {this.state.recCast[i + 1]}
+				thirdMovie = {this.state.recCast[i + 2]}
 			/>;
 			imageGalleryIntermediate.push(oneMovie);
 		}
@@ -139,14 +128,14 @@ export default class Recommendations extends React.Component {
 
 	render() {
 		return (
-			<div className="Recommendations">
-				<PageNavbar active="Recommendations" />
+			<div className="Cast Recommendations">
+				<PageNavbar active="Cast Recommendations"/>
 				<br />
 				<div className="container recommendations-container">
 					<div className="jumbotron">
 						<div className="jumbotron-header">
 
-							<div className="h3">MOVIE RECOMMENDATIONS</div>
+							<div className="h3">CAST RECOMMENDATIONS</div>
 							<br />
 
 							<div className="input-container">
@@ -172,6 +161,7 @@ export default class Recommendations extends React.Component {
 							<br></br>
 
 						 	<div className="h3">YOU MAY LIKE...</div>
+							<br></br>
 								{this.state.imageGallery}
 						 	</div>
 

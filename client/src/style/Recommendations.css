@@ -4,17 +4,13 @@
 
 .jumbotron {
   color: white;
-  background-color: rgba(0,0,0,0.5);
-}
-
-.white_box {
-  color:white
-}
-
-.landing-wrapper {
-  background-size: auto;
-  background-repeat: no-repeat;
-  background-position: top left;
+  background-color: rgba(1,1,1, 0.8);
+  font-family: inherit;
+	font-size: inherit;
+	text-transform: none;
+	letter-spacing: 1px;
+	font-weight: 700;
+  padding: 10px;
 }
 
 .header-container, .results-container {
@@ -136,7 +132,7 @@
 }
 
 .flip-display-inner {
-  position: relative;
+  position: fixed;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -149,7 +145,7 @@
 }
 
 .flip-display-front, .flip-display-back {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden;
@@ -164,7 +160,7 @@
 /* Container holding the image and the text */
 .flip-display-back {
   transform: rotateY(180deg);
-  position: absolute;
+  position: fixed;
   text-align: center;
   color: white;
   background-color: white;
@@ -177,6 +173,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  font-weight: 700;
 }
 
 /*  Header */
@@ -186,6 +183,7 @@
 
 /* Modal Body */
 .modal-body {
+  text-transform: none;
   padding: 2px 16px;}
 
 /* Modal Footer */
@@ -208,7 +206,8 @@
   overflow-y: scroll;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   animation-name: animatetop;
-  animation-duration: 0.4s
+  animation-duration: 0.4s;
+  font-weight: 400;
 }
 
 /* Add Animation */
@@ -228,7 +227,7 @@
   padding:0 80px;
 }
 .modal__content{
-  position:absolute;
+  position: fixed;
   box-sizing: border-box;
   overflow-y:scroll;
   max-height:150px;
@@ -456,11 +455,12 @@
 .modal__relevance{
   color: black;
   position:relative;
+  margin: 50px;
 }
 
 .modal__list{
   color: black;
-  position:absolute;
+  position: absolute;
   overflow-y:scroll;
   max-height:150px;
   left:0%;
@@ -471,7 +471,7 @@
 }
 
 .pushable {
-  background: #6495ed;
+  background:	#ff4747;
   border: none;
   border-radius: 70px;
   cursor: pointer;
@@ -482,15 +482,228 @@
 .front {
   width: 270px;
   display: block;
-  padding: 12px 30px;
+  padding: 12px 25px;
   border-radius: 70px;
-  font-size: 1.1rem;
-  background: #4169e1;
+  font-size: 0.8rem;
+  background: #E50914;
   color: white;
   transform: translateY(-6px);
+  font-family: inherit;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+}
+
+.pushable:focus,.pushable:active {
+   outline: none !important;
 }
 
 .pushable:active .front {
   width: 270px;
   transform: translateY(-2px);
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  font-family: inherit;
+  font-size: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #696969}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+
+
+input {
+	font: 1em Hind, sans-serif;
+	line-height: 1.5em;
+}
+
+input {
+	color: #171717;
+}
+
+.search-bar {
+	display: flex;
+}
+
+.search-bar input,
+.search-btn,
+.search-btn:before,
+.search-btn:after {
+	transition: all 0.25s ease-out;
+}
+.search-bar input,
+.search-btn {
+	width: 3em;
+	height: 3em;
+}
+.search-bar input:invalid:not(:focus),
+.search-btn {
+	cursor: pointer;
+}
+.search-bar,
+.search-bar input:focus,
+.search-bar input:valid  {
+	width: 100%;
+}
+.search-bar input:focus,
+.search-bar input:not(:focus) + .search-btn:focus {
+	outline: white;
+}
+.search-bar {
+	margin: auto;
+	padding: 1.5em;
+	justify-content: center;
+	max-width: 30em;
+}
+
+.search-bar input {
+	background: transparent;
+	border-radius: 1.5em;
+	box-shadow: 0 0 0 0.4em white inset;
+	padding: 0.75em;
+	transform: translate(0.5em,0.5em) scale(0.5);
+	transform-origin: 100% 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.search-bar input::-webkit-search-decoration {
+	-webkit-appearance: none;
+}
+
+.search-bar input:focus,
+.search-bar input:valid {
+	background: white;
+	border-radius: 0.375em 0 0 0.375em;
+	box-shadow: 0 0 0 0.1em #d9d9d9 inset;
+	transform: scale(1);
+}
+
+.search-btn {
+	background: white;
+	border-radius: 0 0.75em 0.75em 0 / 0 1.5em 1.5em 0;
+	padding: 0.75em;
+	position: relative;
+	transform: translate(0.25em,0.25em) rotate(45deg) scale(0.25,0.125);
+	transform-origin: 0 50%;
+}
+
+.search-btn:before,
+.search-btn:after {
+	content: "";
+	display: block;
+	opacity: 0;
+	position: absolute;
+}
+
+.search-btn:before {
+	border-radius: 50%;
+	box-shadow: 0 0 0 0.2em black inset;
+	top: 0.75em;
+	left: 0.55em;
+	width: 1.2em;
+	height: 1.2em;
+}
+.search-btn:after {
+	background: black;
+	border-radius: 0 0.25em 0.25em 0;
+	top: 51%;
+	left: 51%;
+	width: 0.75em;
+	height: 0.25em;
+	transform: translate(0.2em,0) rotate(45deg);
+	transform-origin: 0 50%;
+}
+
+.search-btn span {
+	display: inline-block;
+	overflow: hidden;
+	width: 1px;
+	height: 1px;
+}
+
+.search-bar input:focus + .search-btn,
+.search-bar input:valid + .search-btn {
+	background: #f1f1f1;
+	border-radius: 0 0.375em 0.375em 0;
+	transform: scale(1);
+}
+
+.search-bar input:focus + .search-btn:before,
+.search-bar input:focus + .search-btn:after,
+.search-bar input:valid + .search-btn:before,
+.search-bar input:valid + .search-btn:after {
+	opacity: 1;
+}
+.search-bar input:focus + .search-btn:hover,
+.search-bar input:valid + .search-btn:hover,
+.search-bar input:valid:not(:focus) + .search-btn:focus {
+	background: #f1f1f1;
+}
+.search-bar input:focus + .search-btn:active,
+.search-bar input:valid + .search-btn:active {
+	transform: translateY(1px);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+	input {
+		color: #f1f1f1;
+	}
+	.search-bar input {
+		box-shadow: 0 0 0 0.4em #f1f1f1 inset;
+	}
+	.search-bar input:focus,
+	.search-bar input:valid {
+		background: #3d3d3d;
+		box-shadow: 0 0 0 0.1em #3d3d3d inset;
+	}
+	.search-btn {
+		background: #f1f1f1;
+	}
 }

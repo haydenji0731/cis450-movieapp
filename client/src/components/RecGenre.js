@@ -7,15 +7,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import KeywordButton from './KeywordRecPageButton';
 import BG1 from './bg1.jpg';
 
-export default class Recommendations extends React.Component {
+export default class RecGenre extends React.Component {
 	constructor(props) {
 		super(props);
 
 		// State maintained by this React component is the selected movie name, and the list of recommended movies.
 		this.state = {
-			keyword: "",
+			genre: "",
 			recMovies: [],
-			keywords: [],
+			genres: [],
 			toWatchList: [],
 			showToWatchList: [],
 			originalDisplay: [],
@@ -24,37 +24,37 @@ export default class Recommendations extends React.Component {
 			recMoviesOverviews: [],
 		};
 
-		this.handleKeywordChange = this.handleKeywordChange.bind(this);
-		this.submitKeyword = this.submitKeyword.bind(this);
+		this.handleGenreChange = this.handleGenreChange.bind(this);
+		this.submitGenre = this.submitGenre.bind(this);
 		this.parentCallback = this.parentCallback.bind(this);
 		this.createImageGallery = this.createImageGallery.bind(this);
 	};
 
 	componentDidMount() {
-		fetch("http://localhost:8081/keywordsDropdown",
+		fetch("http://localhost:8081/genresDropdown",
 		{
 			method: 'GET'
 		}).then(res => {
 			return res.json();
 		}, err => {
 			console.log(err);
-		}).then(keywordsList => {
-			if (!keywordsList) return;
-			const keywordsDivs = keywordsList.map((keywordObj, i) =>
+		}).then(genreList => {
+			if (!genreList) return;
+			const genreDivs = genreList.map((genreObj, i) =>
 			  <div class='paddedColumn'>
-				<div><button id="button-" class="pushable" onClick={() => this.submitKeyword(keywordObj.keyword)}>
-					<span class="front">{keywordObj.keyword}</span>
+				<div><button id="button-" class="pushable" onClick={() => this.submitGenre(genreObj.genre)}>
+					<span class="front">{genreObj.genre}</span>
 				</button> <br></br> <br></br> </div>
 				</div>
 			);
 			this.setState({
-				keywords: keywordsDivs
+				genres: genreDivs
 			});
 		});
 	};
 
-	submitKeyword(keyword) {
-		var url = "http://localhost:8081/recs/"+keyword;
+	submitGenre(genre) {
+		var url = "http://localhost:8081/recs/"+genre;
 		fetch(url,
 		{
 			method: 'GET'
@@ -75,7 +75,6 @@ export default class Recommendations extends React.Component {
 					id = {movieObj.id}
 					title = {movieObj.title}
 					overview = {movieObj.overview}
-					keyword = {movieObj.keyword}
 					genre = {movieObj.genre}
 					rating = {movieObj.rating}
 					query = {movieObj.query}
@@ -118,10 +117,10 @@ export default class Recommendations extends React.Component {
 		})
 	}
 
-	handleKeywordChange(e) {
+	handleGenreChange(e) {
 		console.log(e.target.value);
 		this.setState({
-			keyword: e.target.value
+			Genre: e.target.value
 		})
 	};
 
@@ -139,8 +138,8 @@ export default class Recommendations extends React.Component {
 
 	render() {
 		return (
-			<div className="Recommendations">
-				<PageNavbar active="Recommendations" />
+			<div className="RecGenre">
+				<PageNavbar active="RecGenre"/>
 				<br />
 				<div className="container recommendations-container">
 					<div className="jumbotron">
@@ -151,21 +150,10 @@ export default class Recommendations extends React.Component {
 
 							<div className="input-container">
 							<div action="" class="search-bar">
-									<div className="h6">SEARCH BY KEYWORD</div>
-									<input type="text" value={this.state.keyword} onChange={this.handleKeywordChange} id="keywordName" className="keyword-input"></input>
-									<button id="submitKeywordBtn" class="search-btn" onClick={() => this.submitKeyword(this.state.keyword)}></button>
+									<div className="h6">SEARCH BY GENRE</div>
+									<input type="text" value={this.state.Genre} onChange={this.handleGenreChange} id="GenreName" className="Genre-input"></input>
+									<button id="submitGenreBtn" class="search-btn" onClick={() => this.submitGenre(this.state.Genre)}></button>
 							</div>
-							</div>
-
-							<br></br>
-							<br></br>
-
-							<div className="h5">BROWSE POPULAR KEYWORDS</div>
-
-							<br></br>
-
-							<div className="keywords-container">
-								{this.state.keywords}
 							</div>
 
 							<br></br>
