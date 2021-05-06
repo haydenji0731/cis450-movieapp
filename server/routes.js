@@ -27,7 +27,7 @@ const getTopMovies = (req, res) => {
 const getAssociatedStars = (req, res) => {
   var movie = req.params.movie;
   var query=`WITH tmp AS (SELECT s.cast_id AS cast_id FROM movies m JOIN stars s ON m.movie_id = s.movie_id WHERE m.movie_title LIKE '%${movie}%')
-            SELECT a.cast_id, a.name, a.gender, a.profile_path FROM actors a JOIN tmp on a.cast_id = tmp.cast_id LIMIT 5;`;
+            SELECT a.name, a.profile_path FROM actors a JOIN tmp on a.cast_id = tmp.cast_id LIMIT 5;`;
   connection.query(query, function(err, rows, field) {
     if (err) console.log(err);
     else {
