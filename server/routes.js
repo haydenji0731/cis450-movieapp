@@ -193,40 +193,6 @@ const getCastGenres = (req, res) => {
   });
 };
 
-/* ---- Q3a (Best Movies) ---- */
-const getDecades = (req, res) => {
-  const query = `
-  SELECT DISTINCT release_year - MOD(release_year, 10) AS decade FROM movie ORDER BY decade ASC;
-  `;
-  connection.query(query, (err, rows, fields) => {
-    if (err) console.log(err);
-    else res.json(rows);
-  })
-
-};
-
-/* ---- Q3b (Best Movies) ---- */
-const bestMoviesPerDecadeGenre = (req, res) => {
-  var decade = req.params.decade;
-  var genre = req.params.genre;
-  const query = `
-  WITH a AS (SELECT movie.title, movie_genre.movie_id, movie_genre.genre_name, movie.rating, movie.release_year - MOD(movie.release_year, 10) AS decade
-  FROM movie_genre JOIN movie ON movie_genre.movie_id = movie.movie_id),
-  b AS (SELECT genre_name, AVG(rating) AS avg_rating FROM a WHERE a.decade = '${decade}' GROUP BY genre_name),
-  c AS (SELECT title, movie_id, genre_name, rating FROM a WHERE a.decade = '${decade}' AND a.genre_name = '${genre}'),
-  d AS (SELECT c.title, c.movie_id, a.genre_name, a.rating, a.decade
-    FROM c JOIN a WHERE c.movie_id = a.movie_id AND c.title = a.title),
-  e AS (SELECT DISTINCT d.movie_id FROM d, b WHERE d.genre_name = b.genre_name AND d.rating < b.avg_rating),
-  f AS (SELECT DISTINCT d.movie_id FROM d WHERE d.movie_id NOT IN (SELECT movie_id FROM e))
-  SELECT DISTINCT movie.movie_id, movie.title, movie.rating FROM movie, f WHERE f.movie_id = movie.movie_id
-  ORDER BY title ASC LIMIT 100;
-  `;
-  connection.query(query, (err, rows, fields) => {
-    if (err) console.log(err);
-    else res.json(rows);
-  })
-};
-
 /*-- Actors -- */
 const getTopFives = (req, res) => {
   var actor = req.params.actor;
@@ -445,12 +411,10 @@ module.exports = {
   getKeywords: getKeywords,
   getRecs: getRecs,
   getOverviews: getOverviews,
-  getDecades: getDecades,
   getGenres: getGenres,
   getCastRecs: getCastRecs,
   getCastGenres: getCastGenres,
   getTopFiveCompany : getTopFiveCompany,
-  bestMoviesPerDecadeGenre: bestMoviesPerDecadeGenre,
   getTopFives: getTopFives,
   getPCompany: getPCompany,
   getTopPCompanies : getTopPCompanies,

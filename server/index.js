@@ -25,18 +25,12 @@ app.get('/keywordsDropdown', routes.getKeywords);
 //get movie recommendations based on keyword search
 app.get('/recs/:keyword', routes.getRecs);
 
-/* ---- (Best Movies) ---- */
-app.get('/decades', routes.getDecades);
 app.get('/genres/:movie_id', routes.getGenres);
 
 app.get('/overviews/:movie_id', routes.getOverviews);
 
 app.get('/castRecs/:keyword', routes.getCastRecs);
 app.get('/castGenres/:keyword/:cast_id', routes.getCastGenres);
-
-/* ---- Q3b (Best Movies) ---- */
-
-app.get('/bestMovies/:decade/:genre', routes.bestMoviesPerDecadeGenre);
 
 /* -- Actors -- */
 app.get('/actors/:actor', routes.getTopFives);
