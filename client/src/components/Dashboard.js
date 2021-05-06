@@ -19,7 +19,7 @@ export default class Dashboard extends React.Component {
     };
 
     this.trailer="";
-    this.showMovies = this.showMovies.bind(this);
+    this.showActors = this.showActors.bind(this);
   };
 
   componentDidMount() {
@@ -35,7 +35,7 @@ export default class Dashboard extends React.Component {
       const keywordsDivs = keywordsList.map((keywordObj, i) =>
         <MovieButton
           id={keywordObj.movie_id} 
-          onClick={() => this.showMovies(keywordObj.movie)} 
+          onClick={() => this.showActors(keywordObj.movie)} 
           title={keywordObj.movie} 
           genre={keywordObj.genre}
           overview={keywordObj.overview}
@@ -58,7 +58,7 @@ export default class Dashboard extends React.Component {
     });
   };
 
-  showMovies(movie) {
+  showActors(movie) {
     var url = "http://localhost:8081/dashboard/" + movie;
     fetch(url,
       {

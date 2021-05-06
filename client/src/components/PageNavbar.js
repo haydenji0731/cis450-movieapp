@@ -39,6 +39,7 @@ export default class PageNavbar extends React.Component {
 			<div className="PageNavbar">
 			<br></br>
 			<nav className="navbar navbar-expand-sm navbar-custom">
+			<img src={Logo} alt="website logo" width="130" height="60" style={{marginLeft: 35}}/>
 			<div class="container-fluid">
 			  <nav class="navbar navbar-inverse">
 			    <div class="container-fluid">
@@ -58,7 +59,6 @@ export default class PageNavbar extends React.Component {
 			    </div>
 			  </nav>
 			</div>
-			<img src={Logo} alt="website logo" width="160" height="130"/>
 			</nav>
 			</div>
     );
