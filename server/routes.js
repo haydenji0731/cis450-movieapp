@@ -11,10 +11,16 @@ const connection = mysql.createPool(config);
 /* ---- (Dashboard) ---- */
 
 const getTopMovies = (req, res) => {
-  var query = `WITH intermediate AS (SELECT m.movie_id, m.movie_title as movie, m.overview, m.poster_path as path, m.back_path FROM movies m
+  var query = `WITH intermediate AS (
+    SELECT m.movie_id, m.movie_title as movie, m.overview, m.poster_path as path, m.back_path
+    FROM movies m 
     WHERE m.vote_count > (SELECT AVG(vote_count) FROM movies)
     ORDER BY m.vote_average DESC, m.movie_title LIMIT 10)
-    SELECT m.movie, m.overview, g.genre, m.path, m.movie_id, m.back_path FROM intermediate m JOIN movie_genre mg ON mg.movie_id = m.movie_id JOIN genre g ON g.genre_id = mg.genre_id GROUP BY m.movie;`;
+    SELECT t1.movie, t1.overview, t2.genre, t1.path, t1.movie_id, t1.back_path
+    FROM (SELECT m.movie, m.overview, m.path, m.movie_id, m.back_path, mg.genre_id FROM intermediate m JOIN movie_genre mg ON mg.movie_id = m.movie_id) AS t1
+    JOIN (SELECT g.genre_id, g.genre FROM genre g) AS t2 ON t1.genre_id = t2.genre_id
+    GROUP BY t1.movie;
+    `;
       connection.query(query, function(err, rows, field) {
         if (err) console.log(err);
         else {
@@ -27,7 +33,8 @@ const getTopMovies = (req, res) => {
 const getAssociatedStars = (req, res) => {
   var movie = req.params.movie;
   var query=`WITH tmp AS (SELECT s.cast_id AS cast_id FROM movies m JOIN stars s ON m.movie_id = s.movie_id WHERE m.movie_title LIKE '%${movie}%')
-            SELECT a.name, a.profile_path FROM actors a JOIN tmp on a.cast_id = tmp.cast_id LIMIT 5;`;
+  SELECT a.name, a.profile_path FROM actors a JOIN tmp on a.cast_id = tmp.cast_id LIMIT 5;
+  `;
   connection.query(query, function(err, rows, field) {
     if (err) console.log(err);
     else {
@@ -36,7 +43,6 @@ const getAssociatedStars = (req, res) => {
     }
   });
 };
-
 
 /* ---- (Recommendations) ---- */
 
