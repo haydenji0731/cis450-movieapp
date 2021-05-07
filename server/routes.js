@@ -222,8 +222,7 @@ const getTopFives = (req, res) => {
   profit_table AS (SELECT *, (revenue - budget) AS profit
     FROM movies
       NATURAL JOIN stars
-      NATURAL JOIN actors
-    WHERE actors.name = '`+ actor +`'),
+      NATURAL JOIN target),
   top5_profit AS (SELECT name AS actor, movie_title, profit
     FROM profit_table
     ORDER BY profit DESC
@@ -231,10 +230,9 @@ const getTopFives = (req, res) => {
   cast_table AS (SELECT *, (revenue - budget) AS profit
     FROM movies
       NATURAL JOIN stars
-      NATURAL JOIN actors
+      NATURAL JOIN target
       NATURAL JOIN movie_genre
-      NATURAL JOIN genre
-    WHERE actors.name = '`+ actor +`'),
+      NATURAL JOIN genre),
   top5_genre AS (SELECT name AS actor, genre, COUNT(*) AS count
     FROM cast_table
     GROUP BY genre
