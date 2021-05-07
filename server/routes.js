@@ -207,12 +207,13 @@ const getCastGenres = (req, res) => {
 const getTopFives = (req, res) => {
   var actor = req.params.actor;
 
-  const query = `WITH co_stars AS (SELECT s1.cast_id AS actor_id, s2.cast_id AS costar_id, a1.name AS actor, a2.name AS costar
+  const query = `WITH target AS (SELECT * FROM actors a WHERE a.name = "`+ actor +`"),
+  co_stars AS (SELECT s1.cast_id AS actor_id, s2.cast_id AS costar_id, a1.name AS actor, a2.name AS costar
     FROM stars s1
       JOIN stars s2 ON s1.movie_id = s2.movie_id
-      JOIN actors a1 ON a1.cast_id = s1.cast_id
+      JOIN target a1 ON a1.cast_id = s1.cast_id
       JOIN actors a2 ON a2.cast_id = s2.cast_id
-    WHERE a1.name <> a2.name AND a1.name = "`+ actor +`"),
+    WHERE a1.name <> a2.name),
   top5_costars AS (SELECT actor, costar, COUNT(*) AS costarred_movies_count
     FROM co_stars
     GROUP BY costar
@@ -243,7 +244,7 @@ const getTopFives = (req, res) => {
     FROM movies m
       NATURAL JOIN made_by
       NATURAL JOIN production_company
-      JOIN stars s ON m.movie_id = s.movie_id
+      NATURAL JOIN stars s
       JOIN actors a ON s.cast_id = a.cast_id),
   top5_prod AS (SELECT actor_name AS actor, prod_co_name, COUNT(*) AS prod_co_count
     FROM prod
