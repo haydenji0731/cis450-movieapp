@@ -284,11 +284,20 @@ const getTopFiveCompany = (req, res) => {
   console.log(pCompName);
   const query = `
 With table1 as (
+With similarity AS (
 Select pc.name, ABS(Length(pc.name) - Length("${pCompName}")) As similarity
 From production_company pc
-Where pc.name Like "%${pCompName}%"
+WHERE pc.name = "${pCompName}"
+   OR (((pc.name LIKE "% ${pCompName} %") OR (pc.name LIKE "${pCompName} %") OR (pc.name LIKE"% ${pCompName}")) AND ABS(Length(pc.name) - Length("$${pCompName}")) < 30 AND length("${pCompName}") > 2)
+   OR (((pc.name LIKE "% ${pCompName} %") OR (pc.name LIKE "${pCompName} %") OR (pc.name LIKE "% ${pCompName}")) AND ABS(Length(pc.name) - Length("${pCompName}")) < 7 AND length("${pCompName}") <= 2)
 Order by similarity, pc.name
-limit 1),
+limit 5
+) 
+Select Distinct pc1.name
+ From production_company pc1 JOIN similarity aa ON aa.name = pc1.name JOIN made_by mb ON mb.production_company_id = pc1.production_company_id JOIN movies m1 ON m1.movie_id = mb.movie_id
+Group by pc1.name
+ORDER BY SUM(m1.revenue) DESC
+ LIMIT 1),
 
  movies_counts As (
 Select Count(*) as num

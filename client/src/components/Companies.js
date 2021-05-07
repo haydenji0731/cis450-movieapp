@@ -31,6 +31,10 @@ export default class Companies extends React.Component {
     // Hint: Name of movie submitted is contained in `this.state.movieName`.
     submitPComp(pCompName) {
         console.log(this.state.pCompName);
+
+
+
+
         var url = "http://localhost:8081/Company/" + this.state.pCompName;
 
         fetch(url, {
@@ -39,6 +43,11 @@ export default class Companies extends React.Component {
 
         .then(res => res.json())
         .then(recList => {
+            if (!recList) return;
+            var compReturned = "";
+            if (recList.length > 0){
+                compReturned = recList[0].name;
+            }
             let topDivs = recList.map((topFives, i) => (
                 <CompanyRow key={i} className="CompanyRow" topFives = {topFives}/>
             ));
@@ -46,12 +55,13 @@ export default class Companies extends React.Component {
 
             this.setState({
                 topFives: topDivs,
-
+                current_company : compReturned,
             });
           })
+
           console.log(this.state);
           console.log("done");
-          console.log(this.state.current_company)
+          console.log(this.state.current_company);
 
     };
 
@@ -74,6 +84,7 @@ export default class Companies extends React.Component {
                         <div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Fives</div>
                         <br></br>
                         <div className="h5" style={{textAlign: 'center'}}>SEARCH BY COMPANY NAME</div>
+
                         <div className="input-container">
                         <div action="" class="search-bar">
                             <input type="text" value={this.state.pCompName} onChange={this.handleActorChange} id="actor" className="actor-input"></input>
@@ -81,7 +92,8 @@ export default class Companies extends React.Component {
                         </div>
                         </div>
                         <br></br>
-                        <div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Five Results</div>
+                        <div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Five Results for :</div>
+                        <div className="h5" style={{textAlign: 'center', fontSize: 60}}>{this.state.current_company}</div>
                         <br></br>
                         <table style={{textAlign: 'center', height: 80, width: 1080, justifyContent: 'center'}}>
                             <thead className="actorsTable-header" style={{fontSize: 18}}>
