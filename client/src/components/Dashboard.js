@@ -60,6 +60,7 @@ export default class Dashboard extends React.Component {
 
   showActors(movie) {
     var url = "http://localhost:8081/dashboard/" + movie;
+    console.log(url);
     fetch(url,
       {
         method: 'GET'
