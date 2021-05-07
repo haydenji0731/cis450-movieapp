@@ -46,7 +46,7 @@ export default class Actors extends React.Component {
           console.log(this.state);
 	};
 
-	
+
 	render() {
 		return (
             <>
@@ -55,21 +55,25 @@ export default class Actors extends React.Component {
 
 				<div className="container recommendations-container">
 					<div className="jumbotron">
-						
+
 						<div className="popcorn" style={{textAlign: 'center'}}>
-							<img src = {Trophy} width="130" height="130"/> 
+							<img src = {Trophy} width="130" height="130"/>
 							<img src = {Popcorn} width="120" height="130"/>
 							<img src = {Trophy} width="130" height="130"/>
 						</div>
 						<br></br>
 						<div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Fives</div>
 						<br></br>
-						<div className="input-container" style={{textAlign: 'center'}}>
-							<input type='text' placeholder="Enter Actor Name" value={this.state.actor} onChange={this.handleActorChange} id="actor" className="actor-input"/>
-							<button id="submitActorBtn" className="submit-actor" onClick={this.submitActor}>Submit</button>
+
+						<div className="h5" style={{textAlign: 'center'}}>SEARCH BY ACTOR NAME</div>
+						<div className="input-container">
+						<div action="" class="search-bar">
+								<input type="text" value={this.state.actor} onChange={this.handleActorChange} id="actor" className="actor-input"></input>
+								<button id="submitActorBtn" class="search-btn" onClick={this.submitActor}></button>
+						</div>
 						</div>
 						<br></br>
-						<div className="h5" style={{textAlign: 'center'}}>The top fives are...</div>
+						<div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Five Results</div>
 						<br></br>
 						<table style={{textAlign: 'center', height: 80, width: 1080, justifyContent: 'center'}}>
                             <thead className="actorsTable-header" style={{fontSize: 18}}>

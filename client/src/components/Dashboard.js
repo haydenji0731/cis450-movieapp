@@ -34,13 +34,13 @@ export default class Dashboard extends React.Component {
       if (!keywordsList) return;
       const keywordsDivs = keywordsList.map((keywordObj, i) =>
         <MovieButton
-          id={keywordObj.movie_id} 
-          onClick={() => this.showActors(keywordObj.movie)} 
-          title={keywordObj.movie} 
+          id={keywordObj.movie_id}
+          onClick={() => this.showActors(keywordObj.movie)}
+          title={keywordObj.movie}
           genre={keywordObj.genre}
           overview={keywordObj.overview}
           path={keywordObj.path}
-        /> 
+        />
       );
 
       var bannerObj = keywordsList[Math.floor(Math.random() * (keywordsList.length - 1))];
@@ -92,10 +92,10 @@ export default class Dashboard extends React.Component {
   }
 
   moveToActors() {
-    window.location.href="/Actor%20Top%20Fives";
+    window.location.href="/actors";
   }
-  
-  render() {    
+
+  render() {
     return (
       <div className="Dashboard">
 
@@ -129,5 +129,3 @@ export default class Dashboard extends React.Component {
     );
   };
 };
-
-

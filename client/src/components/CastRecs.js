@@ -63,7 +63,7 @@ export default class CastRecs extends React.Component {
 		}, err => {
 			console.log(err);
 		}).then(recsList => {
-			if (recsList.ok) return;
+			if (!recsList) return;
 				const recCastIdsIntermediate = [];
 				const recCastProfilesIntermediate = [];
 				for (var i = 0; i < recsList.length; i++) {

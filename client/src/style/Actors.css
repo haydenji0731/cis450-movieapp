@@ -6,7 +6,7 @@
 .header-container .headers, .results-container .movieResults {
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
+  align-items: flex-start;
   height: 40px;
 }
 

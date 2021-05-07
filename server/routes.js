@@ -13,7 +13,7 @@ const connection = mysql.createPool(config);
 const getTopMovies = (req, res) => {
   var query = `WITH intermediate AS (
     SELECT m.movie_id, m.movie_title as movie, m.overview, m.poster_path as path, m.back_path
-    FROM movies m 
+    FROM movies m
     WHERE m.vote_count > (SELECT AVG(vote_count) FROM movies)
     ORDER BY m.vote_average DESC, m.movie_title LIMIT 10)
     SELECT t1.movie, t1.overview, t2.genre, t1.path, t1.movie_id, t1.back_path
@@ -76,10 +76,12 @@ const getRecs = (req, res) => {
                                          JOIN keyword k ON ab.keyword_id = k.keyword_id),
                       rec_movie AS (SELECT m.movie_id, m.poster_path, m.movie_title,
                                            m.overview, mk.keyword, m.vote_average,
-                                           ABS(Length(mk.keyword) - Length('${keyword}')) As similarity
+                                           ABS(Length(mk.keyword) - Length("${keyword}")) As similarity
                                     FROM movies m
                                     JOIN movie_keywords mk ON m.movie_title = mk.movie_title
-                                    WHERE mk.keyword LIKE '%${keyword}%'),
+                                    WHERE mk.keyword = "${keyword}"
+                                    OR (((mk.keyword LIKE "% ${keyword} %") OR (mk.keyword LIKE "${keyword} %") OR (mk.keyword LIKE "% ${keyword}")) AND ABS(Length(mk.keyword) - Length("${keyword}")) < 10 AND length("${keyword}") > 2)
+                                    OR (((mk.keyword LIKE "% ${keyword} %") OR (mk.keyword LIKE "${keyword} %") OR (mk.keyword LIKE "% ${keyword}")) AND ABS(Length(mk.keyword) - Length("${keyword}")) < 7 AND length("${keyword}") <= 2)),
   		                movie_genres AS (SELECT m.movie_id, m.movie_title as title,
                                               m.overview, m.vote_average, g.genre
                                        FROM movies m
@@ -92,7 +94,7 @@ const getRecs = (req, res) => {
                  JOIN movie_genres g ON m.movie_title = g.title
                  WHERE m.vote_average <= 10
                  GROUP BY m.movie_title
-                 ORDER BY m.similarity, m.vote_average DESC, m.movie_title
+                 ORDER BY similarity, m.vote_average DESC, m.movie_title
                  LIMIT 9;`;
   connection.query(query, function(err, rows, field) {
     if (err) console.log(err);
@@ -125,10 +127,12 @@ const getCastRecs = (req, res) => {
                                         FROM movies m
                                         JOIN about ab ON m.movie_id = ab.movie_id),
                      aligned_keywords AS (SELECT mk.movie_id AS movie_id, k.keyword_id AS keyword_id, k.keyword AS keyword,
-                                          ABS(Length(k.keyword) - Length('${keyword}')) As similarity
+                                          ABS(Length(k.keyword) - Length("${keyword}")) As similarity
                                           FROM movie_keywords mk
                                           JOIN keyword k ON mk.keyword_id = k.keyword_id
-                                          WHERE k.keyword LIKE '%${keyword}%' LIMIT 15),
+                                          WHERE k.keyword = "${keyword}"
+                                          OR (((k.keyword LIKE "% ${keyword} %") OR (k.keyword LIKE "${keyword} %") OR (k.keyword LIKE "% ${keyword}")) AND ABS(Length(k.keyword) - Length("${keyword}")) < 10 AND length("${keyword}") > 2)
+                                          OR (((k.keyword LIKE "% ${keyword} %") OR (k.keyword LIKE "${keyword} %") OR (k.keyword LIKE "% ${keyword}")) AND ABS(Length(k.keyword) - Length("${keyword}")) < 7 AND length("${keyword}") <= 2)),
                      selected_movies AS (SELECT m.movie_id, m.movie_title AS title, m.overview AS overview,
                                                 ak.keyword AS keyword, ak.similarity FROM movies m
                                          JOIN aligned_keywords ak ON m.movie_id = ak.movie_id)
@@ -178,7 +182,7 @@ const getCastGenres = (req, res) => {
                     aligned_keywords AS (SELECT mk.movie_id AS movie_id, k.keyword_id AS keyword_id, k.keyword AS keyword
                                          FROM movie_keywords mk
                                          JOIN keyword k ON mk.keyword_id = k.keyword_id
-                                         WHERE k.keyword LIKE '%${keyword}%'),
+                                         WHERE k.keyword LIKE "%${keyword}%"),
                     actors_movie_keyword AS (SELECT ak.movie_id
                                              FROM aligned_keywords ak
                                              JOIN stars st ON ak.movie_id = st.movie_id
@@ -280,9 +284,9 @@ const getTopFiveCompany = (req, res) => {
   console.log(pCompName);
   const query = `
 With table1 as (
-Select pc.name, ABS(Length(pc.name) - Length('${pCompName}')) As similarity
+Select pc.name, ABS(Length(pc.name) - Length("${pCompName}")) As similarity
 From production_company pc
-Where pc.name Like '%${pCompName}%'
+Where pc.name Like "%${pCompName}%"
 Order by similarity, pc.name
 limit 1),
 
@@ -377,9 +381,9 @@ ON a.row_num = e.row_num, table1`;
 
 const getPCompany = (req, res) => {
   var pCompName = req.params.pCompName;
-  var query = `With table1 as (Select pc.name, ABS(Length(pc.name) - Length('${pCompName}')) As similarity
+  var query = `With table1 as (Select pc.name, ABS(Length(pc.name) - Length("${pCompName}")) As similarity
                                From production_company pc
-                               Where pc.name Like '%${pCompName}%'
+                               Where pc.name Like "%${pCompName}%"
                                Order by similarity, pc.name limit 10)
               SELECT m1.movie_id as id, pc1.name as companyName, m1.movie_title as title, m1.vote_average as rating,
                      m1.poster_path as path, m1.original_language, m1.overview
