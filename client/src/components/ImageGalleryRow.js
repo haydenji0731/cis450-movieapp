@@ -25,7 +25,9 @@ export default class ImageGalleryRow extends React.Component {
 				firstOverview: <div class="modal-content">
 				  						   <div class="modal-body">
 														<br></br>
-				    									<p>Overview: {this.props.firstMovieOverview}</p>
+														  <div className="boldText" style={{textAlign: 'center', fontSize: 20}}>Overview</div>
+															<br></br>
+				    									<p>{this.props.firstMovieOverview}</p>
 				  							 </div>
 											 </div>
 			})
@@ -40,7 +42,9 @@ export default class ImageGalleryRow extends React.Component {
 				secondOverview: <div class="modal-content">
 				  						   <div class="modal-body">
 														<br></br>
-				    									<p>Overview: {this.props.secondMovieOverview}</p>
+														<div className="boldText" style={{textAlign: 'center', fontSize: 20}}>Overview</div>
+														<br></br>
+														<p>{this.props.secondMovieOverview}</p>
 				  							 </div>
 											 </div>
 			})
@@ -54,8 +58,10 @@ export default class ImageGalleryRow extends React.Component {
 			this.setState({
 				thirdOverview: <div class="modal-content">
 												 <div class="modal-body">
-														<br></br>
-															<p>Overview: {this.props.thirdMovieOverview}</p>
+												 <br></br>
+												 <div className="boldText" style={{textAlign: 'center', fontSize: 20}}>Overview</div>
+												 <br></br>
+												 <p>{this.props.thirdMovieOverview}</p>
 												 </div>
 											 </div>
 			})
@@ -94,32 +100,3 @@ export default class ImageGalleryRow extends React.Component {
 		);
 	};
 };
-
-// <div>
-// <div class="paddedRow">
-// 		<div class="column">
-// 			<div className="modal__wrapper">
-// 				<div className="modal__relevance" onMouseOver={e => {this.handleFirstHover();}} onMouseLeave={this.handleFirstLeave}>
-// 					{this.props.firstMovie}
-// 					{this.state.firstOverview}
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<div class="column">
-// 			<div className="modal__wrapper">
-// 				<div className="modal__relevance" onMouseOver={e => {this.handleSecondHover();}} onMouseLeave={this.handleSecondLeave}>
-// 					{this.props.secondMovie}
-// 					{this.state.secondOverview}
-// 				</div>
-// 			</div>
-// 		</div>
-// 		<div class="column">
-// 			<div className="modal__wrapper">
-// 				<div className="modal__relevance" onMouseOver={e => {this.handleThirdHover();}} onMouseLeave={this.handleThirdLeave}>
-// 					{this.props.thirdMovie}
-// 					{this.state.thirdOverview}
-// 				</div>
-// 			</div>
-// 		</div>
-// </div>
-// </div>

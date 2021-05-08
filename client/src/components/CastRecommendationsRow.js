@@ -81,7 +81,7 @@ export default class CastRecommendationsRow extends React.Component {
 						</div>
 
 						<div class="flip-display-back">
-  						<div class="centered"><p><h5>{this.props.name}</h5></p>
+  						<div class="centered"><p className="boldText" style={{textAlign: 'center', fontSize: 25}}>{this.props.name}</p>
 							<p>Keyword: {this.props.keyword}</p>
   						<p>Genres: {this.state.genresDisplay}</p></div>
 						</div>

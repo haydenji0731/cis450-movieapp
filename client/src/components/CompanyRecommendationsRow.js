@@ -83,20 +83,13 @@ export default class CompanyRecommendationsRow extends React.Component {
 						</div>
 
 						<div class="flip-display-back">
-  						<div class="centered"><p><h5>{this.props.title}</h5></p>
-							<p>Production Company: {this.props.companyName}</p>
-  						<p>Genres: {this.state.genresDisplay}</p>
-  						<row>Rating: {this.props.rating}</row></div>
+							<div class="centered"><p className="boldText" style={{textAlign: 'center', fontSize: 23}}>{this.props.title}</p>
+								<p>Keyword: {this.props.keyword}</p>
+								<p>Genres: {this.state.genresDisplay}</p>
+								<p>Rating: {this.props.rating}</p></div>
 						</div>
 					</div>
 				</div>
 		);
 	};
 };
-
-// <div class="flip-display-back">
-//   <br></ br>
-// 	<row><h5>{this.props.title}</h5></row>
-// 	<p class='header-text'>Genres: {this.state.genresDisplay}</p>
-// 	<row>Rating: {this.props.rating}</row>
-// </div>

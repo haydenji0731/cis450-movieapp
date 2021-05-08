@@ -2,6 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/MovieButton.css';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import YTSearch from '../../node_modules/youtube-api-search';
+
+let API_KEY = 'AIzaSyApDeq7qviPLrxTpuaBIWRh2gVu0lkcI94'
 
 export default class KeywordButton extends React.Component {
 	constructor(props) {
@@ -19,12 +22,16 @@ export default class KeywordButton extends React.Component {
 
 		this.state = {
 			genres: [],
-			genresDisplay: []
+			genresDisplay: [],
+			videos: [],
+			displayVideo: '',
 		}
+
 		this.callbackFunction = this.callbackFunction.bind(this);
 		this.getGenres = this.getGenres.bind(this);
 		this.showGenres = this.showGenres.bind(this);
 		this.showTrailer = this.showTrailer.bind(this);
+		this.videoSearch = this.videoSearch.bind(this);
 	};
 
 	componentDidMount() {
@@ -36,6 +43,7 @@ export default class KeywordButton extends React.Component {
 	    this.getGenres(this.props.id);
 	  }
 	}
+
 	callbackFunction(movie) {
 		this.props.parentCallback(movie);
 	};
@@ -61,7 +69,6 @@ export default class KeywordButton extends React.Component {
 	});
 	};
 
-
 	showGenres() {
 		const genresDisplayArr = [];
 		for (var i = 0; i < this.state.genres.length; i++) {
@@ -77,17 +84,26 @@ export default class KeywordButton extends React.Component {
 		});
 	};
 
+	videoSearch(term) {
+		YTSearch({key: API_KEY, term: term}, (videos) => {
+			this.setState({
+				videos: videos,
+				displayVideo: "https://www.youtube.com/watch?v="+videos[0].id.videoId,
+			});
+			window.location = this.state.displayVideo;
+		})
+	}
+
 	showTrailer() {
-		var query='https://www.youtube.com/results?search_query='+this.props.title.replace(" ", "+")+'trailer'
-        window.location = query;
+		  //this.videoSearch(this.props.title +' movie trailer');
 	}
 
 	render() {
 		return (
 			<div className="movie" id={this.props.id} onClick={this.props.onClick}>
 				<div className="movie__poster">
-					<img src={"https://m.media-amazon.com/images/M"+this.props.path} 
-					alt = {this.props.title} 
+					<img src={"https://m.media-amazon.com/images/M"+this.props.path}
+					alt = {this.props.title}
 					width="160" height="230" />
 				</div>
 				<div className="movie__data">

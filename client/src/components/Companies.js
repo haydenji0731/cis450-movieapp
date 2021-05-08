@@ -31,10 +31,6 @@ export default class Companies extends React.Component {
     // Hint: Name of movie submitted is contained in `this.state.movieName`.
     submitPComp(pCompName) {
         console.log(this.state.pCompName);
-
-
-
-
         var url = "http://localhost:8081/Company/" + this.state.pCompName;
 
         fetch(url, {

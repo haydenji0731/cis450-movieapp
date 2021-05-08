@@ -2,6 +2,9 @@ import React from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import '../style/Banner.css';
+import YTSearch from '../../node_modules/youtube-api-search';
+
+let API_KEY = 'AIzaSyApDeq7qviPLrxTpuaBIWRh2gVu0lkcI94'
 
 export default class Banner extends React.Component {
         constructor(props) {
@@ -14,12 +17,31 @@ export default class Banner extends React.Component {
             overview: "",
             query: "",
         };
+
+        this.state = {
+          videos: [],
+          displayVideo: '',
+        }
+
         this.showTrailer = this.showTrailer.bind(this);
+        this.videoSearch = this.videoSearch.bind(this);
     };
 
+    videoSearch(term) {
+      console.log(term);
+      YTSearch({key: API_KEY, term: term}, (videos) => {
+        console.log("youtube search");
+        this.setState({
+          videos: videos,
+          displayVideo: "https://www.youtube.com/watch?v="+videos[0].id.videoId,
+        });
+        window.location = this.state.displayVideo;
+      })
+    }
+
     showTrailer() {
-        var query='https://www.youtube.com/results?search_query='+this.props.title.replace(" ", "+")+'trailer'
-        window.location = query;
+        console.log(this.state.displayVideo);
+        //this.videoSearch(this.props.title + ' movie trailer');
     }
 
     render () {
@@ -39,9 +61,9 @@ export default class Banner extends React.Component {
                     <button className="banner__button play" onClick={this.showTrailer}><PlayArrowIcon />Watch Trailer</button>
                 </div>
                 <h1 className="banner__description">{this.props.overview}</h1>
-            </div>   
+            </div>
             <div className="banner--fadeBottom"/>
         </header>
         )
     }
-}   
+}

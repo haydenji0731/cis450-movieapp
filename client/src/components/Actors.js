@@ -12,7 +12,8 @@ export default class Actors extends React.Component {
 
         this.state = {
 			actor: "",
-			topFives: []
+			topFives: [],
+			returnedActor: "",
 		};
 
 		this.handleActorChange = this.handleActorChange.bind(this);
@@ -35,12 +36,18 @@ export default class Actors extends React.Component {
 
 		.then(res => res.json())
         .then(recList => {
+				  	if (!recList) return;
+				  	var actorReturned = "";
+					  if (recList.length > 0){
+						  	actorReturned = recList[0].name;
+			  		}
             let topDivs = recList.map((topFives, i) => (
                 <ActorsRow key={i} className="ActorsRow" topFives = {topFives}/>
             ));
 
             this.setState({
                 topFives: topDivs,
+								returnedActor: actorReturned,
             });
           })
           console.log(this.state);
@@ -73,7 +80,7 @@ export default class Actors extends React.Component {
 						</div>
 						</div>
 						<br></br>
-						<div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Five Results</div>
+						<div className="h5" style={{textAlign: 'center', fontSize: 60}}>Top Five Results for : {this.state.returnedActor}</div>
 						<br></br>
 						<table style={{textAlign: 'center', height: 80, width: 1080, justifyContent: 'center'}}>
                             <thead className="actorsTable-header" style={{fontSize: 18}}>
