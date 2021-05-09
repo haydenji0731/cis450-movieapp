@@ -3,10 +3,37 @@
 Our team includes:
 Hayden Ji, Bryan Wei, Cheryl Lam, Phil Situmorang
 
-PennFlix is a web app that allows users to browse through movies and retrieve relevant information. 
+## PennFlix
+<img src="./client/src/components/pennFlix_web.png" width="300" height="150">
 
-Features:
+**PennFlix is a web-based movie database search engine that gives both movie-watchers and movie-creators useful information based on the relative information specific to user inputs.**
+
+
+### Features:
 1. Dashboard (Hayden)
 2. Recommendations (Cheryl)
 4. Actors / Actresses (Bryan)
 5. Production Company (Phil)
+
+### Instructions:
+
+1. Open a terminal and type:
+```
+cd cis450-movieapp
+cd server 
+npm install
+npm start
+```
+2. Open another terminal and type:
+```
+cd cis450-movieapp
+cd client
+npm install
+npm start
+```
+3. After step 2, the web app window should be open in your default browser. Otherwise, open an internet browser and type in:
+```
+http://localhost:3000/
+```
+
+#### Thank you for taking the time to look at our project!
