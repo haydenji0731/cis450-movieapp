@@ -9,7 +9,6 @@ export default class RecommendationsRow extends React.Component {
 	constructor(props) {
 		super(props);
 
-		// State maintained by this React component is the selected movie name, and the list of recommended movies.
 		this.state = {
 			childToWatchList: [],
 			genres: [],

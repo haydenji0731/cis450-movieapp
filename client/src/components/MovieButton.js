@@ -95,7 +95,7 @@ export default class KeywordButton extends React.Component {
 	}
 
 	showTrailer() {
-		  //this.videoSearch(this.props.title +' movie trailer');
+		  this.videoSearch(this.props.title +' movie trailer');
 	}
 
 	render() {

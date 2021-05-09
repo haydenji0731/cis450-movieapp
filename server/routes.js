@@ -76,13 +76,12 @@ const getRecs = (req, res) => {
                                          JOIN about ab ON m.movie_id = ab.movie_id
                                          JOIN keyword k ON ab.keyword_id = k.keyword_id),
                       rec_movie AS (SELECT m.movie_id, m.poster_path, m.movie_title,
-                                           m.overview, mk.keyword, m.vote_average,
-                                           ABS(Length(mk.keyword) - Length("${keyword}")) As similarity
+                                           m.overview, mk.keyword, m.vote_average, ABS(Length(mk.keyword) - Length("${keyword}")) As similarity
                                     FROM movies m
                                     JOIN movie_keywords mk ON m.movie_title = mk.movie_title
                                     WHERE mk.keyword = "${keyword}"
-                                    OR (((mk.keyword LIKE "% ${keyword} %") OR (mk.keyword LIKE "${keyword} %") OR (mk.keyword LIKE "% ${keyword}") OR (mk.keyword LIKE "${keyword}%")) AND ABS(Length(mk.keyword) - Length("${keyword}")) < 10 AND length("${keyword}") > 2)
-                                    OR (((mk.keyword LIKE "% ${keyword} %") OR (mk.keyword LIKE "${keyword} %") OR (mk.keyword LIKE "% ${keyword}")) AND ABS(Length(mk.keyword) - Length("${keyword}")) < 7 AND length("${keyword}") <= 2)),
+                                    OR (((mk.keyword LIKE "% ${keyword} %") OR (mk.keyword LIKE "${keyword} %") OR (mk.keyword LIKE "% ${keyword}") OR (mk.keyword LIKE "${keyword}%")) AND ABS(Length(mk.keyword) - Length("${keyword}")) < 10 AND length("${keyword}") > 3)
+                                    OR (((mk.keyword LIKE "% ${keyword} %") OR (mk.keyword LIKE "${keyword} %") OR (mk.keyword LIKE "% ${keyword}")) AND ABS(Length(mk.keyword) - Length("${keyword}")) < 7 AND length("${keyword}") <= 3)),
   		                movie_genres AS (SELECT m.movie_id, m.movie_title as title,
                                               m.overview, m.vote_average, g.genre
                                        FROM movies m
@@ -122,7 +121,6 @@ const getOverviews = (req, res) => {
 //Returns the actors that have acted in movies with the input keyword, ranked first by
 //similarity of the movies' keyword to the input keyword, followed by number of movies with that keyword
 const getCastRecs = (req, res) => {
-  console.log(500);
   var keyword = req.params.keyword;
   var query =  `WITH movie_keywords AS (SELECT m.movie_id AS movie_id, ab.keyword_id AS keyword_id
                                         FROM movies m
@@ -132,8 +130,8 @@ const getCastRecs = (req, res) => {
                                           FROM movie_keywords mk
                                           JOIN keyword k ON mk.keyword_id = k.keyword_id
                                           WHERE k.keyword = "${keyword}"
-                                          OR (((k.keyword LIKE "% ${keyword} %") OR (k.keyword LIKE "${keyword} %") OR (k.keyword LIKE "% ${keyword}") OR (k.keyword LIKE "${keyword}%")) AND ABS(Length(k.keyword) - Length("${keyword}")) < 10 AND length("${keyword}") > 2)
-                                          OR (((k.keyword LIKE "% ${keyword} %") OR (k.keyword LIKE "${keyword} %") OR (k.keyword LIKE "% ${keyword}")) AND ABS(Length(k.keyword) - Length("${keyword}")) < 7 AND length("${keyword}") <= 2)),
+                                          OR (((k.keyword LIKE "% ${keyword} %") OR (k.keyword LIKE "${keyword} %") OR (k.keyword LIKE "% ${keyword}") OR (k.keyword LIKE "${keyword}%")) AND ABS(Length(k.keyword) - Length("${keyword}")) < 10 AND length("${keyword}") > 3)
+                                          OR (((k.keyword LIKE "% ${keyword} %") OR (k.keyword LIKE "${keyword} %") OR (k.keyword LIKE "% ${keyword}")) AND ABS(Length(k.keyword) - Length("${keyword}")) < 7 AND length("${keyword}") <= 3)),
                      selected_movies AS (SELECT m.movie_id, m.movie_title AS title, m.overview AS overview,
                                                 ak.keyword AS keyword, ak.similarity FROM movies m
                                          JOIN aligned_keywords ak ON m.movie_id = ak.movie_id)
@@ -291,9 +289,11 @@ With similarity AS (
 Select pc.name, ABS(Length(pc.name) - Length("${pCompName}")) As similarity
 From production_company pc
 WHERE pc.name = "${pCompName}"
-   OR (((pc.name LIKE "%${pCompName}%") OR (pc.name LIKE "${pCompName}%") OR (pc.name LIKE"%${pCompName}")) AND ABS(Length(pc.name) - Length("${pCompName}")) < 35 AND length("${pCompName}") > 2)
+   OR (((pc.name LIKE "%${pCompName}%") OR (pc.name LIKE "${pCompName}%") OR (pc.name LIKE"%${pCompName}")) AND ABS(Length(pc.name) - Length("${pCompName}")) < 30 AND length("${pCompName}") > 2)
    OR (((pc.name LIKE "%${pCompName}%") OR (pc.name LIKE "${pCompName}%") OR (pc.name LIKE "%${pCompName}")) AND ABS(Length(pc.name) - Length("${pCompName}")) < 7 AND length("${pCompName}") <= 2)
-Order by similarity, pc.name)
+Order by similarity, pc.name
+limit 5
+)
 Select Distinct pc1.name
  From production_company pc1 JOIN similarity aa ON aa.name = pc1.name JOIN made_by mb ON mb.production_company_id = pc1.production_company_id JOIN movies m1 ON m1.movie_id = mb.movie_id
 Group by pc1.name
@@ -320,7 +320,7 @@ from movies
 ),
 
 TOP5weightedRatedMovies  AS (
-Select m1.movie_id, m1.movie_title, (m1.revenue - m1.budget) as profit, ((m1.vote_count * m1.vote_average)/(t1.95percentile + m1.vote_count) + (t1.95percentile * mv1. mean_vote)/(t1.95percentile + m1.vote_count)) as rating
+Select DISTINCT m1.movie_id, m1.movie_title, (m1.revenue - m1.budget) as profit, ((m1.vote_count * m1.vote_average)/(t1.95percentile + m1.vote_count) + (t1.95percentile * mv1. mean_vote)/(t1.95percentile + m1.vote_count)) as rating
 From production_company pc1 JOIN made_by mb1 ON pc1.production_company_id = mb1.production_company_id JOIN movies m1 ON mb1.movie_id = m1.movie_id , 95percentile_vote t1, mean_vote mv1, table1
 where pc1.name LIKE concat('%',table1.name,'%') AND m1.revenue - m1.budget > 1000 AND m1.vote_count > t1.95percentile
 order by rating desc
@@ -335,7 +335,7 @@ where pc1.name LIKE concat('%',table1.name,'%')),
 
 
 Top5_profitable_movies  AS (
-select all_movies_details.movie_title
+select DISTINCT all_movies_details.movie_title
 from all_movies_details
 order by all_movies_details.profit Desc
 limit 5

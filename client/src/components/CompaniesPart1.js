@@ -10,8 +10,7 @@ import ImageGalleryRow from './ImageGalleryRow';
 export default class CompaniesPart1 extends React.Component {
 	constructor(props) {
 		super(props);
-
-		// State maintained by this React component is the selected movie name, and the list of recommended movies.
+		
 		this.state = {
 			company: "",
 			recMovies: [],

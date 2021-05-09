@@ -41,7 +41,7 @@ export default class Banner extends React.Component {
 
     showTrailer() {
         console.log(this.state.displayVideo);
-        //this.videoSearch(this.props.title + ' movie trailer');
+        this.videoSearch(this.props.title + ' movie trailer');
     }
 
     render () {

@@ -9,7 +9,6 @@ export default class CompanyRecommendationsRow extends React.Component {
 	constructor(props) {
 		super(props);
 
-		// State maintained by this React component is the selected movie name, and the list of recommended movies.
 		this.state = {
 			childToWatchList: [],
 			genres: [],
@@ -84,7 +83,7 @@ export default class CompanyRecommendationsRow extends React.Component {
 
 						<div class="flip-display-back">
 							<div class="centered"><p className="boldText" style={{textAlign: 'center', fontSize: 23}}>{this.props.title}</p>
-								<p>Keyword: {this.props.keyword}</p>
+								<p>Company: {this.props.companyName}</p>
 								<p>Genres: {this.state.genresDisplay}</p>
 								<p>Rating: {this.props.rating}</p></div>
 						</div>

@@ -12,7 +12,6 @@ import CompaniesPart1 from './CompaniesPart1';
 import RecGenre from './RecGenre';
 import CastRecs from './CastRecs';
 import Actors from './Actors';
-import Try from './Try';
 
 export default class App extends React.Component {
 
@@ -58,10 +57,6 @@ export default class App extends React.Component {
 						<Route
 							path="/actors"
 							render={() => <Actors />}
-						/>
-						<Route
-							path="/try"
-							render={() => <Try />}
 						/>
 					</Switch>
 				</Router>

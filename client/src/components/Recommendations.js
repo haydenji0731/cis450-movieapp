@@ -11,7 +11,6 @@ export default class Recommendations extends React.Component {
 	constructor(props) {
 		super(props);
 
-		// State maintained by this React component is the selected movie name, and the list of recommended movies.
 		this.state = {
 			keyword: "",
 			recMovies: [],
@@ -181,8 +180,3 @@ export default class Recommendations extends React.Component {
 		);
 	};
 };
-
-
-// <div class='left-column'>
-// 	<button id="showToWatchListBtn" className="btn btn-4 btn-4a" onClick={() => this.showToWatchList()} >View My To-Watch List</button>
-// </div>
