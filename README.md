@@ -4,7 +4,7 @@ Our team includes:
 Hayden Ji, Bryan Wei, Cheryl Lam, Phil Situmorang
 
 ## PennFlix
-<img src="./client/src/components/pennFlix_web.png" width="300" height="150">
+<img src="./client/src/components/pennFlix_web.png" width="250" height="125">
 
 **PennFlix is a web-based movie database search engine that gives both movie-watchers and movie-creators useful information based on the relative information specific to user inputs.**
 
