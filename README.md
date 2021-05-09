@@ -12,8 +12,8 @@ Hayden Ji, Bryan Wei, Cheryl Lam, Phil Situmorang
 ### Features:
 1. Dashboard (Hayden)
 2. Recommendations (Cheryl)
-4. Actors / Actresses (Bryan)
-5. Production Company (Phil)
+4. Actors / Actresses (Phil)
+5. Production Company (Bryan)
 
 ### Instructions:
 
